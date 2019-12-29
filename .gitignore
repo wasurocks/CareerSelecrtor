@@ -1,3 +1,4 @@
 express_backend/node_modules
-express_backend/.env
+express_backend/config/.env
 credentials-DB.txt
+express_backend/config/keys.js
