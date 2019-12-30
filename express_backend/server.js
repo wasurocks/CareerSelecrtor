@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 
 const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
 
 // Used for setting environmental variables
 require("dotenv").config();
@@ -34,6 +35,14 @@ require("./config/passport")(passport);
 
 // Routes using /api/users set to direct to users file
 app.use("/api/users", users);
+
+// Routes using /api/profile set to direct to profile file
+app.use("/api/profile", profile);
+
+// 404 Error page to account for all situations
+app.use('*', (req, res) => {
+    res.status(404).send('Error');
+});
 
 // Set port as environmental variable or fallback as port 5000
 const port = process.env.PORT || 5000;
