@@ -1,0 +1,19 @@
+version: "3"
+services: 
+    api:
+        build:
+            context: ./express_backend
+            dockerfile: Dockerfile.dev
+        restart: always
+        volumes: 
+            - /app/node_modules
+            - ./express_backend:/app/express_backend
+    nginx:
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile.dev
+        restart: always
+        volumes: 
+            - ./nginx:/app/nginx
+        ports: 
+            - "8000:80"
