@@ -2,11 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 
-const users = require("./routes/api/users");
-const profile = require("./routes/api/profile");
+const users = require("./api/users");
+const profile = require("./api/profile");
 
 // Used for setting environmental variables
-require("dotenv").config();
+// require("dotenv").config();
 
 const app = express();
 
@@ -34,10 +34,14 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes using /api/users set to direct to users file
-app.use("/api/users", users);
+app.use("/users", users);
 
 // Routes using /api/profile set to direct to profile file
-app.use("/api/profile", profile);
+app.use("/profile", profile);
+
+app.use('/test', (req, res) => {
+    res.send('test complete!');
+});
 
 // 404 Error page to account for all situations
 app.use('*', (req, res) => {
