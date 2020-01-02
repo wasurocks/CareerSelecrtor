@@ -3,10 +3,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 
 const users = require("./api/users");
-const profile = require("./api/profile");
-
-// Used for setting environmental variables
-// require("dotenv").config();
+const profile = require("./api/data");
 
 const app = express();
 
@@ -19,12 +16,12 @@ app.use(
 );
 
 // Database config
-const db = require("./config/keys").mongoURI;
+const dbURI = require("./config/keys").mongoURI;
 
 // Make a connection to MongoDB server
-mongoose
-    .connect(db, { useNewUrlParser: true })
-    .then(() => console.log("Successfully connected to MongoDB"))
+const connector = mongoose
+    .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Successfully connected to MongoDB!"))
     .catch(err => console.log(err));
 
 // Passport middleware
@@ -37,7 +34,7 @@ require("./config/passport")(passport);
 app.use("/users", users);
 
 // Routes using /api/profile set to direct to profile file
-app.use("/profile", profile);
+app.use("/data", profile);
 
 app.use('/test', (req, res) => {
     res.send('test complete!');

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema for users of the database
-const CareerSchema = new Schema({
+const FoodSchema = new Schema({
     img: {
         data: Buffer,
         contentType: String
@@ -12,7 +12,10 @@ const CareerSchema = new Schema({
     },
     desc: {
         type: String
+    },
+    prop: {
+        type: Object
     }
 });
 
-module.exports = Career = mongoose.model("careers", CareerSchema);
+module.exports = Food = mongoose.model("food", FoodSchema);
