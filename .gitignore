@@ -3,3 +3,5 @@ express_backend/config/.env
 credentials-DB.txt
 express_backend/config/keys.js
 .vscode
+mockup
+photos
