@@ -1,7 +1,5 @@
 express_backend/node_modules
-express_backend/config/.env
-credentials-DB.txt
-express_backend/config/keys.js
+express_backend/config/app-env
 .vscode
 mockup
 photos

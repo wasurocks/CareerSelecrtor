@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const AWS = require("aws-sdk");
 
 const users = require("./api/users");
 const profile = require("./api/data");

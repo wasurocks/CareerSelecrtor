@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema for users of the database
 const FoodSchema = new Schema({
-    img: {
-        data: Buffer,
-        contentType: String
-    },
     name: {
+        type: String
+    },
+    disp_name: {
         type: String
     },
     desc: {
@@ -18,4 +17,5 @@ const FoodSchema = new Schema({
     }
 });
 
-module.exports = Food = mongoose.model("food", FoodSchema);
+module.exports = Food = mongoose.model("food", FoodSchema, "food"); // IMPORTANT additional parameter 
+// Enables access to existing database

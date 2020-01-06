@@ -10,6 +10,7 @@
   "author": "Wasu Sonthichai",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.597.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.2",
     "express": "^4.17.1",
