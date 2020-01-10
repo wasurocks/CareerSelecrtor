@@ -7,13 +7,16 @@ services:
         restart: always
         volumes: 
             - /app/node_modules
-            - ./express_backend:/app/express_backend
+            - ./express_backend:/express_backend
     nginx:
         build:
             context: ./nginx
             dockerfile: Dockerfile.dev
+        depends_on: 
+            - api
         restart: always
         volumes: 
-            - ./nginx:/app/nginx
+            - ./nginx:/nginx
         ports: 
             - "8000:80"
+            - "27017:27017"

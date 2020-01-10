@@ -1,12 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const AWS = require("aws-sdk");
+const cors = require("cors");
 
-const users = require("./routes/api/users");
-const profile = require("./routes/api/profile");
-
-// Used for setting environmental variables
-require("dotenv").config();
+const users = require("./api/users");
+const profile = require("./api/data");
 
 const app = express();
 
@@ -17,14 +16,15 @@ app.use(
         extended: false
     })
 );
+app.use(cors());
 
 // Database config
-const db = require("./config/keys").mongoURI;
+const dbURI = require("./config/keys").mongoURI;
 
 // Make a connection to MongoDB server
-mongoose
-    .connect(db, { useNewUrlParser: true })
-    .then(() => console.log("Successfully connected to MongoDB"))
+const connector = mongoose
+    .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Successfully connected to MongoDB!"))
     .catch(err => console.log(err));
 
 // Passport middleware
@@ -34,10 +34,14 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes using /api/users set to direct to users file
-app.use("/api/users", users);
+app.use("/users", users);
 
 // Routes using /api/profile set to direct to profile file
-app.use("/api/profile", profile);
+app.use("/data", profile);
+
+app.use('/test', (req, res) => {
+    res.send('test complete!');
+});
 
 // 404 Error page to account for all situations
 app.use('*', (req, res) => {
