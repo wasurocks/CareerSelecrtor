@@ -1,5 +1,2 @@
-express_backend/node_modules
-express_backend/config/app-env
 .vscode/settings.json
 mockup
-photos
