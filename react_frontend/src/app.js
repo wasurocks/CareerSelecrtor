@@ -10,5 +10,4 @@ export default function App() {
             <Route exact path="/home" component={HomePage} />
         </Switch>
     );
-}
-//<Route path="/:id" component={StartPage}></Route>
+};

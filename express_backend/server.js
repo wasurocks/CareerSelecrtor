@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const AWS = require("aws-sdk");
+const cors = require("cors");
 
 const users = require("./api/users");
 const profile = require("./api/data");
@@ -15,6 +16,7 @@ app.use(
         extended: false
     })
 );
+app.use(cors());
 
 // Database config
 const dbURI = require("./config/keys").mongoURI;

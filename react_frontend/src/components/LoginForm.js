@@ -1,10 +1,19 @@
 import React from "react";
+
+// CSS
 import "../styles/LoginPage.css";
-import Button from "@material-ui/core/Button";
-//import { Formik } from "formik";
-//import _ as EmailValidator from "email-validator";
-//import _ as Yup from "yup";
+
+// Form import
+import { Formik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import qs from "querystring";
+
+// Routes import
 import { Redirect } from "react-router-dom";
+
+// UI imports
+import Button from "@material-ui/core/Button";
 import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 
@@ -16,43 +25,96 @@ const theme = createMuiTheme({
     }
 });
 
-class LoginForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        toHomePage: false
-      }
-
-      this.handleClick = this.handleClick.bind(this);
-    }
-  
-    handleClick(event) {
-      this.setState({toHomePage: true})
-    }
-
-    render() {
-        if (this.state.toHomePage === true) {
-            return <Redirect to='/home' />
+const LoginForm = () => (
+    <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={
+            // Define a function for what happens on submit
+            (values, { setSubmitting }) => {
+                setTimeout(() => {
+                    console.log("Logging in ", values);
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                      }
+                    axios
+                        .post(`http://localhost:5000/users/login`, qs.stringify(values), config)
+                        .then(res => {
+                            console.log(res.data);
+                            const token = res.data;
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                    setSubmitting(false);
+                }, 500);
+            }
         }
-        return (
-            <div className="login-form">
+        validationSchema={Yup.object().shape({
+            email: Yup.string()
+                .email("Invalid email")
+                .required("Email is required"),
+            password: Yup.string().required("Password cannot be empty")
+        })}
+    >
+        {/* Render props from Formik destructured (ES6) */}
+
+        {props => {
+            const {
+                values,
+                touched,
+                errors,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                handleSubmit
+            } = props;
+            return (
                 <ThemeProvider theme={theme}>
-                    <TextField helperText="Email">
-                    </TextField>
-                    <TextField helperText="Password">
-                    </TextField>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className="button"
-                        onClick={this.handleClick}
-                    >
-                        LOGIN
-                    </Button>
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <TextField
+                            name="email"
+                            type="text"
+                            helperText={
+                                errors.email && touched.email
+                                    ? errors.email
+                                    : "Email"
+                            }
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={errors.email && touched.email}
+                        />
+
+                        <TextField
+                            name="password"
+                            type="password"
+                            helperText={
+                                errors.password && touched.password
+                                    ? errors.password
+                                    : "Password"
+                            }
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={errors.password && touched.password}
+                        />
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className="button"
+                            type="submit"
+                            disabled={isSubmitting}
+                        >
+                            LOGIN
+                        </Button>
+                    </form>
                 </ThemeProvider>
-            </div>
-        );
-    }
-}
+            );
+        }}
+    </Formik>
+);
 
 export default LoginForm;
