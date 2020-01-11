@@ -4,6 +4,8 @@ services:
         build:
             context: ./express_backend
             dockerfile: Dockerfile.dev
+        env_file: 
+            - ./.env
         restart: always
         volumes: 
             - /app/node_modules

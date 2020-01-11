@@ -1,7 +1,7 @@
 .register {
     display: grid;
     grid-template-columns: 740fr 440fr 740fr;
-    grid-template-rows: 152.5fr 460fr 330.5fr 80fr;
+    grid-template-rows: 152.5fr 460fr 350.5fr 60fr;
     height: 100vh;
     width: 100vw;
 }

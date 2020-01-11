@@ -39,13 +39,15 @@ const LoginForm = () => (
                         }
                       }
                     axios
-                        .post(`http://localhost:5000/users/login`, qs.stringify(values), config)
+                        .post(`http://localhost:8000/api/users/login`, qs.stringify(values), config)
                         .then(res => {
+                            // Displays response data if successful
                             console.log(res.data);
                             const token = res.data;
                         })
                         .catch(err => {
-                            console.log(err);
+                            //Displays error data if unsuccessful
+                            console.log(err.data);
                         });
                     setSubmitting(false);
                 }, 500);

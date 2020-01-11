@@ -40,18 +40,19 @@ const RegisterForm = () => (
                     };
                     axios
                         .post(
-                            `http://localhost:5000/users/register`,
+                            `http://localhost:8000/api/users/register`,
                             qs.stringify(values),
                             config
                         )
                         .then(res => {
-                            console.log(res.status);
-                            if(res.status == 200){
-                                
+                            if(res.status == 201){
+                                console.log("Success");
+                            } else {
+                                console.log(res.data);
                             }
                         })
                         .catch(err => {
-                            console.log(err.response);
+                            console.log(err);
                         });
                     setSubmitting(false);
                 }, 500);
