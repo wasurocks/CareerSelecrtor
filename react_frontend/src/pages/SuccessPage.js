@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/LoginPage.css";
+import "../styles/SuccessPage.css";
 import LoginForm from "../components/LoginForm.js";
 import Logo from "../components/Logo.js";
 
@@ -16,12 +16,11 @@ const theme = createMuiTheme({
     }
 });
 
-export default function LoginPage() {
+export default function SuccessPage() {
     return (
         <ThemeProvider theme={theme}>
-            <div className="login">
+            <div className="success">
                 <Logo/>
-                <LoginForm/>
                 <Link className="redirect" component={RouterLink} to="/register">
                     Need an account? Register <strong>here</strong>
                 </Link>

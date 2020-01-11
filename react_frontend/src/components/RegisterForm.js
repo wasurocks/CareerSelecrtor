@@ -45,11 +45,13 @@ const RegisterForm = () => (
                             config
                         )
                         .then(res => {
-                            console.log(res.data);
-                            const token = res.data;
+                            console.log(res.status);
+                            if(res.status == 200){
+                                
+                            }
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err.response);
                         });
                     setSubmitting(false);
                 }, 500);
@@ -58,8 +60,12 @@ const RegisterForm = () => (
         validationSchema={Yup.object().shape({
             email: Yup.string()
                 .email("Invalid email")
-                .required("Email is required"),
-            password: Yup.string().required("Password is required"),
+                .required("Email is required")
+                .matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Invalid email"),
+            password: Yup.string()
+                .required("Password is required")
+                .min(6, "Password must be between 6-12 characters")
+                .max(12, "Password must be between 6-12 characters"),
             password2: Yup.string()
                 .required("Confirm password is required")
                 .oneOf([Yup.ref("password"), null], "Passwords must match")

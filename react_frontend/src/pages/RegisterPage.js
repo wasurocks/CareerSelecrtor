@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/RegisterPage.css";
-import logo from "../logo/foodicon.png";
 import RegisterForm from "../components/RegisterForm.js";
+import Logo from "../components/Logo.js";
 
 // UI imports
 import { ThemeProvider, TextField } from "@material-ui/core";
@@ -18,13 +18,7 @@ const theme = createMuiTheme({
 export default function RegisterPage() {
     return (
             <div className="register">
-                <img src={logo} className="logo" />
-                <div className="title">
-                    <span className="text">FoodBuddy</span>
-                </div>
-                <div className="subtitle">
-                    <span className="text">Your friend in food</span>
-                </div>
+                <Logo/>
                 <RegisterForm />
             </div>
     );
