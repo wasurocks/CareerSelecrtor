@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import LoginPage from  "./pages/LoginPage.js";
-import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage.js"
 
 export default function App() {
     return (
         <Switch>
             <Route exact path="/" component={LoginPage} />
-            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/register" component={RegisterPage} />
         </Switch>
     );
 };
