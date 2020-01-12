@@ -21,9 +21,6 @@ export default function SuccessPage() {
         <ThemeProvider theme={theme}>
             <div className="success">
                 <Logo/>
-                <Link className="redirect" component={RouterLink} to="/register">
-                    Need an account? Register <strong>here</strong>
-                </Link>
             </div>
         </ThemeProvider>
     );

@@ -1,10 +1,9 @@
 import React from "react";
-import "../styles/LoginPage.css";
-import LoginForm from "../components/LoginForm.js";
+import "../styles/ErrorPage.css";
 import Logo from "../components/Logo.js";
 
 // UI imports
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 import { ThemeProvider, Link } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 
@@ -16,14 +15,16 @@ const theme = createMuiTheme({
     }
 });
 
-export default function LoginPage() {
+export default function ErrorPage() {
     return (
         <ThemeProvider theme={theme}>
-            <div className="login">
+            <div className="error">
                 <Logo/>
-                <LoginForm/>
-                <Link className="redirect" component={RouterLink} to="/register">
-                    Need an account? Register <strong>HERE</strong>
+                <div className="box">
+                    <span>Aww, snap! There has been an error</span>
+                </div>
+                <Link className="redirect" component={RouterLink} to="/login">
+                    Go back to safety <strong>HERE</strong>
                 </Link>
             </div>
         </ThemeProvider>

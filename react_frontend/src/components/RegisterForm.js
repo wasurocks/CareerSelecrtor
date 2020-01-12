@@ -66,7 +66,7 @@ export default class RegisterForm extends React.Component {
     };
 
     render() {
-        if(this.state.isRegistered) return <Redirect to="/success"/>
+        if(this.state.isRegistered) return <Redirect to="/login"/>
         return (
             <Formik
                 initialValues={{ email: "", password: "", password2: "" }}
