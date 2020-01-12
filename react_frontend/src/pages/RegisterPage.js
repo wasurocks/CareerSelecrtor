@@ -6,6 +6,7 @@ import Logo from "../components/Logo.js";
 // UI imports
 import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { Redirect } from "react-router-dom";
 
 const theme = createMuiTheme({
     palette: {
@@ -17,9 +18,9 @@ const theme = createMuiTheme({
 
 export default function RegisterPage(props) {
     return (
-            <div className="register">
-                <Logo/>
-                <RegisterForm />
-            </div>
+        <div className="register">
+            <Logo />
+            <RegisterForm />
+        </div>
     );
 }

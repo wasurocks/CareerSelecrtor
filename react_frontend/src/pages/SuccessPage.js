@@ -21,19 +21,16 @@ class SuccessPage extends React.Component {
         super(props);
     }
     render() {
-        if (this.props.isLoggedIn) {
-            return (
-                <ThemeProvider theme={theme}>
-                    <div className="success">
-                        <Logo />
-                        <div className="box">
-                            <span>You are logged in</span>
-                        </div>
+        return (
+            <ThemeProvider theme={theme}>
+                <div className="success">
+                    <Logo />
+                    <div className="box">
+                        <span>You are logged in</span>
                     </div>
-                </ThemeProvider>
-            );
-        }
-        return <div>Test</div>;
+                </div>
+            </ThemeProvider>
+        );
     }
 }
 

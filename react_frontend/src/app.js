@@ -11,16 +11,26 @@ class App extends React.Component {
         this.state = {
             isLoggedIn: false
         };
+        this.handleLogin = this.handleLogin.bind(this);
+        this.checkLoggedIn = this.checkLoggedIn.bind(this);
+    }
+
+    handleLogin() {
+        this.setState({isLoggedIn: true}, () => alert(this.state.isLoggedIn));
+    }
+
+    checkLoggedIn() {
+        console.log(this.state.isLoggedIn);
+        return this.state.isLoggedIn;
     }
 
     render() {
         // If user is logged in, route all to success page
-        if (this.state.isLoggedIn) return <Redirect to="/success" />;
         return (
             <Switch>
-                <Route exact path={["/", "/login"]} component={LoginPage} />
-                <Route exact path="/register" component={RegisterPage} />
-                <Route exact path="/success" component={SuccessPage} />
+                <Route exact path={["/", "/login"]} render={() => this.checkLoggedIn() ?<Redirect to="/success"/>:<LoginPage onLogin={this.handleLogin}/>} />
+                <Route exact path="/register" render={() => this.checkLoggedIn() ?<Redirect to="/success"/>:<RegisterPage />} />
+                <Route exact path="/success" render={() => this.checkLoggedIn() ?<SuccessPage />:<Redirect to="/login"/>} />
                 <Route component={ErrorPage} />
             </Switch>
         );

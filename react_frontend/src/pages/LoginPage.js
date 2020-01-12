@@ -16,12 +16,12 @@ const theme = createMuiTheme({
     }
 });
 
-export default function LoginPage() {
+export default function LoginPage(props) {
     return (
         <ThemeProvider theme={theme}>
             <div className="login">
                 <Logo/>
-                <LoginForm/>
+                <LoginForm onLogin={props.onLogin}/>
                 <Link className="redirect" component={RouterLink} to="/register">
                     Need an account? Register <strong>HERE</strong>
                 </Link>

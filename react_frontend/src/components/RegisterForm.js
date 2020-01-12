@@ -33,7 +33,10 @@ export default class RegisterForm extends React.Component {
         };
     }
 
-    handleSubmit = async (values, { setSubmitting, resetForm, setFieldTouched }) => {
+    handleSubmit = async (
+        values,
+        { setSubmitting, resetForm, setFieldTouched }
+    ) => {
         setTimeout(() => {
             console.log("Registering ", values);
             // Declare content type
@@ -53,7 +56,7 @@ export default class RegisterForm extends React.Component {
                     if (res.status == 201) {
                         console.log("Success");
                         alert("Registration successful");
-                        this.setState({ isRegistered: true});
+                        this.setState({ isRegistered: true });
                     }
                 })
                 // Catch errors
@@ -70,7 +73,7 @@ export default class RegisterForm extends React.Component {
             // Reset entire form to blank
             resetForm({});
             // Set all fields unfilled and remove error messages
-            Object.keys(values).forEach((key) => {
+            Object.keys(values).forEach(key => {
                 setFieldTouched(values[key], false);
             });
             // Set submitting state to false
@@ -80,8 +83,8 @@ export default class RegisterForm extends React.Component {
 
     render() {
         // If the registration is successful, redirect the user to the login page
-        if(this.state.isRegistered) {
-            return <Redirect to="/login"/>
+        if (this.state.isRegistered) {
+            return <Redirect to="/login" />;
         }
         return (
             <Formik
@@ -89,7 +92,6 @@ export default class RegisterForm extends React.Component {
                 onSubmit={this.handleSubmit}
                 validationSchema={Yup.object().shape({
                     email: Yup.string()
-                        .email("Invalid email")
                         .required("Email is required")
                         .matches(
                             /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
