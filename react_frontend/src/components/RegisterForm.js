@@ -33,7 +33,7 @@ export default class RegisterForm extends React.Component {
         };
     }
 
-    handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    handleSubmit = async (values, { setSubmitting, resetForm, setFieldTouched }) => {
         setTimeout(() => {
             console.log("Registering ", values);
             const config = {
@@ -65,6 +65,9 @@ export default class RegisterForm extends React.Component {
                     }
                 });
             resetForm({});
+            Object.keys(values).forEach((key) => {
+                setFieldTouched(values[key], false);
+            });
             setSubmitting(false);
         }, 500);
     };
