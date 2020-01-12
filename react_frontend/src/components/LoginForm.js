@@ -25,6 +25,16 @@ const theme = createMuiTheme({
     }
 });
 
+/*export default class LoginForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: false
+        }
+    }
+}*/
+
+
 const LoginForm = () => (
     <Formik
         initialValues={{ email: "", password: "" }}
