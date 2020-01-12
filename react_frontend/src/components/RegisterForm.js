@@ -36,6 +36,7 @@ export default class RegisterForm extends React.Component {
     handleSubmit = async (values, { setSubmitting, resetForm, setFieldTouched }) => {
         setTimeout(() => {
             console.log("Registering ", values);
+            // Declare content type
             const config = {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -47,6 +48,7 @@ export default class RegisterForm extends React.Component {
                     qs.stringify(values),
                     config
                 )
+                // In case of successful registration
                 .then(res => {
                     if (res.status == 201) {
                         console.log("Success");
@@ -54,6 +56,7 @@ export default class RegisterForm extends React.Component {
                         this.setState({ isRegistered: true});
                     }
                 })
+                // Catch errors
                 .catch(err => {
                     if (err.response.data.email == "User already exists") {
                         console.log("User already exists");
@@ -64,10 +67,13 @@ export default class RegisterForm extends React.Component {
                         alert("Invalid information");
                     }
                 });
+            // Reset entire form to blank
             resetForm({});
+            // Set all fields unfilled and remove error messages
             Object.keys(values).forEach((key) => {
                 setFieldTouched(values[key], false);
             });
+            // Set submitting state to false
             setSubmitting(false);
         }, 500);
     };
@@ -100,6 +106,7 @@ export default class RegisterForm extends React.Component {
                             "Passwords must match"
                         )
                 })}
+                // Pass values as render props
                 render={({
                     values,
                     errors,
