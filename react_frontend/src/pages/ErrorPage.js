@@ -21,7 +21,8 @@ export default function ErrorPage() {
             <div className="error">
                 <Logo/>
                 <div className="box">
-                    <span>Aww, snap! There has been an error</span>
+                    <span>Error {":("}</span>
+                    <iframe src="https://giphy.com/embed/26AHLBZUC1n53ozi8" frameBorder="0" className="giphy-embed"/>
                 </div>
                 <Link className="redirect" component={RouterLink} to="/login">
                     Go back to safety <strong>HERE</strong>

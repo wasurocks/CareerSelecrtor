@@ -15,7 +15,7 @@ const theme = createMuiTheme({
     }
 });
 
-export default function RegisterPage() {
+export default function RegisterPage(props) {
     return (
             <div className="register">
                 <Logo/>

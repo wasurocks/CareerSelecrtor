@@ -16,12 +16,24 @@ const theme = createMuiTheme({
     }
 });
 
-export default function SuccessPage() {
-    return (
-        <ThemeProvider theme={theme}>
-            <div className="success">
-                <Logo/>
-            </div>
-        </ThemeProvider>
-    );
-}
+class SuccessPage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        if(this.props.isLoggedIn) {
+            return (
+                <ThemeProvider theme={theme}>
+                <div className="success">
+                    <Logo />
+                </div>
+                </ThemeProvider>
+            );
+        }
+        return (
+            <div>Test</div>
+        );
+    };
+};
+
+export default SuccessPage;

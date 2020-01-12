@@ -33,7 +33,7 @@ export default class RegisterForm extends React.Component {
         };
     }
 
-    handleSubmit = async (values, { setSubmitting }) => {
+    handleSubmit = async (values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
             console.log("Registering ", values);
             const config = {
@@ -50,23 +50,30 @@ export default class RegisterForm extends React.Component {
                 .then(res => {
                     if (res.status == 201) {
                         console.log("Success");
-                        this.setState({isRegistered:true});
+                        alert("Registration successful");
+                        this.setState({ isRegistered: true});
                     }
                 })
                 .catch(err => {
                     if (err.response.data.email == "User already exists") {
                         console.log("User already exists");
+                        alert("User already exists");
                     } else {
                         // Should never happen but just in case
                         console.log("Invalid information");
+                        alert("Invalid information");
                     }
                 });
+            resetForm({});
             setSubmitting(false);
         }, 500);
     };
 
     render() {
-        if(this.state.isRegistered) return <Redirect to="/login"/>
+        // If the registration is successful, redirect the user to the login page
+        if(this.state.isRegistered) {
+            return <Redirect to="/login"/>
+        }
         return (
             <Formik
                 initialValues={{ email: "", password: "", password2: "" }}
