@@ -7,7 +7,6 @@ import "../styles/LoginPage.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import qs from "querystring";
 
 // Routes import
 import { Redirect } from "react-router-dom";
@@ -16,6 +15,7 @@ import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { AuthConsumer } from "../AuthContext";
 
 const theme = createMuiTheme({
     palette: {
@@ -42,13 +42,13 @@ export default class LoginForm extends React.Component {
             // Declare content type
             const config = {
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    "Content-Type": "application/json"
                 }
             };
             axios
                 .post(
                     `http://localhost:8000/api/users/login`,
-                    qs.stringify(values),
+                    values,
                     config
                 )
                 // In case of successful login
@@ -56,7 +56,6 @@ export default class LoginForm extends React.Component {
                     if (res.data.success) {
                         console.log("Success");
                         this.setState({ isLoggedIn: true });
-                        this.props.onLogin();
                     }
                 })
                 // Catch errors
@@ -80,8 +79,15 @@ export default class LoginForm extends React.Component {
     render() {
         // If the login is successful, redirect the user to the success page
         if (this.state.isLoggedIn) {
-            // FIND A WAY TO UPDATE APP'S ISLOGGEDIN
-            return <Redirect to="/success" />;
+            return (
+                <AuthConsumer>
+                    {({login}) => {
+                        login();
+                        alert("Logged in!");
+                    }}
+                    <Redirect to="/success" />
+                </AuthConsumer>
+            );
         }
         return (
             <Formik

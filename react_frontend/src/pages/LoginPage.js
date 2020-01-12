@@ -21,7 +21,7 @@ export default function LoginPage(props) {
         <ThemeProvider theme={theme}>
             <div className="login">
                 <Logo/>
-                <LoginForm onLogin={props.onLogin}/>
+                <LoginForm />
                 <Link className="redirect" component={RouterLink} to="/register">
                     Need an account? Register <strong>HERE</strong>
                 </Link>

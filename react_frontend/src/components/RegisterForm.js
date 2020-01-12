@@ -7,7 +7,6 @@ import "../styles/RegisterPage.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import qs from "querystring";
 
 // Routes import
 import { Redirect } from "react-router-dom";
@@ -42,13 +41,13 @@ export default class RegisterForm extends React.Component {
             // Declare content type
             const config = {
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    "Content-Type": "application/json"
                 }
             };
             axios
                 .post(
                     `http://localhost:8000/api/users/register`,
-                    qs.stringify(values),
+                    values,
                     config
                 )
                 // In case of successful registration

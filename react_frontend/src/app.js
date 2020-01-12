@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { AuthProvider } from "./AuthContext.js";
+import ProtectedRoute from "./ProtectedRoute.js";
 import LoginPage from "./pages/LoginPage.js";
 import RegisterPage from "./pages/RegisterPage.js";
 import SuccessPage from "./pages/SuccessPage.js";
@@ -16,7 +18,7 @@ class App extends React.Component {
     }
 
     handleLogin() {
-        this.setState({isLoggedIn: true}, () => alert(this.state.isLoggedIn));
+        this.setState({ isLoggedIn: true }, () => alert(this.state.isLoggedIn));
     }
 
     checkLoggedIn() {
@@ -27,12 +29,14 @@ class App extends React.Component {
     render() {
         // If user is logged in, route all to success page
         return (
-            <Switch>
-                <Route exact path={["/", "/login"]} render={() => this.checkLoggedIn() ?<Redirect to="/success"/>:<LoginPage onLogin={this.handleLogin}/>} />
-                <Route exact path="/register" render={() => this.checkLoggedIn() ?<Redirect to="/success"/>:<RegisterPage />} />
-                <Route exact path="/success" render={() => this.checkLoggedIn() ?<SuccessPage />:<Redirect to="/login"/>} />
-                <Route component={ErrorPage} />
-            </Switch>
+            <AuthProvider>
+                <Switch>
+                    <Route exact path={["/", "/login"]} render={() => <LoginPage />}/>
+                    <Route exact path="/register" component={RegisterPage}/>/>
+                    <ProtectedRoute exact path="/success" component={SuccessPage}/>
+                    <Route component={ErrorPage} />
+                </Switch>
+            </AuthProvider>
         );
     }
 }
