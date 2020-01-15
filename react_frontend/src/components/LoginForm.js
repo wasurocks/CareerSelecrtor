@@ -13,7 +13,7 @@ import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { AuthConsumer } from "../AuthContext";
+import AuthContext from "../AuthContext";
 
 const theme = createMuiTheme({
     palette: {
@@ -93,6 +93,8 @@ export default class LoginForm extends React.Component {
                     .then(res => {
                         if (res.data.success) {
                             console.log("Success");
+                            let value = this.context;
+                            value.updateUserStatus({isLoggedIn: true});
                             this.setState({ isLoggedIn: true });
                         }
                     })
@@ -113,6 +115,7 @@ export default class LoginForm extends React.Component {
     render() {
         // If the login is successful, redirect the user to the success page
         if (this.state.isLoggedIn) return <Redirect to="/success" />;
+
         return (
             <ThemeProvider theme={theme}>
                 <form onSubmit={this.handleSubmit} className="login-form">
@@ -164,3 +167,5 @@ export default class LoginForm extends React.Component {
         );
     }
 }
+
+LoginForm.contextType = AuthContext;

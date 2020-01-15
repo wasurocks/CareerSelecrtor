@@ -16,7 +16,7 @@ const theme = createMuiTheme({
     }
 });
 
-export default function LoginPage(props) {
+export default function LoginPage() {
     return (
         <ThemeProvider theme={theme}>
             <div className="login">
