@@ -126,7 +126,7 @@ export default class RegisterForm extends React.Component {
 
         return (
             <ThemeProvider theme={theme}>
-                <form onSubmit={this.handleSubmit} className="login-form">
+                <form onSubmit={this.handleSubmit} className="register-form">
                     <TextField
                         name="email"
                         type="text"
