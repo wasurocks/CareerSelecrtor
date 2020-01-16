@@ -6,6 +6,7 @@ import Logo from "../components/Logo.js";
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
 const theme = createMuiTheme({
     palette: {
@@ -26,7 +27,7 @@ class SuccessPage extends React.Component {
     
     handleClick(event) {
         event.preventDefault();
-        localStorage.removeItem('user');
+        this.context.logout();
         this.setState({redirect: true});
     }
 
@@ -46,5 +47,7 @@ class SuccessPage extends React.Component {
         );
     }
 }
+
+SuccessPage.contextType = AuthContext;
 
 export default SuccessPage;

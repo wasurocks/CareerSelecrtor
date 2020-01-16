@@ -106,8 +106,8 @@ export default class RegisterForm extends React.Component {
                             if (
                                 err.response.data.email == "User already exists"
                             ) {
-                                console.log("User already exists");
-                                alert("User already exists");
+                                console.log("Account already exists");
+                                alert("Account already exists");
                             } else {
                                 // Should never happen but just in case
                                 console.log("Invalid information");

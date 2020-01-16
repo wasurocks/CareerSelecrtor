@@ -95,15 +95,13 @@ export default class LoginForm extends React.Component {
                     .then(res => {
                         if (res.status == 201) {
                             console.log("Success");
-                            let value = this.context;
-                            value.updateUserStatus(true);
+                            this.context.login(res.data.token);
                             this.setState({ isLoggedIn: true });
                         }
                     })
                     // Catch errors
                     .catch(err => {
                         if (err) {
-                            alert(err);
                             console.log("Invalid email/password");
                             this.setState({ isSubmitting: false });
                             alert(
@@ -169,4 +167,4 @@ export default class LoginForm extends React.Component {
             </ThemeProvider>
         );
     }
-};
+}

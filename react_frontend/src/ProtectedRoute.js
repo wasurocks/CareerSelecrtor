@@ -1,9 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import SuccessPage from "./pages/SuccessPage.js";
+import { AuthContext } from "./AuthContext.js";
 
 const ProtectedRoute = () => {
-    if (localStorage.getItem('user')){
+    const context = React.useContext(AuthContext);
+    if (context.getUserStatus()){
         return <SuccessPage/>;
     }
     else return <Redirect to="/login"/>;

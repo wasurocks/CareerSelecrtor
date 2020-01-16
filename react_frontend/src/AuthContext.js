@@ -10,16 +10,28 @@ const AuthContext = React.createContext({
 class AuthProvider extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            user: {
-                isLoggedIn: false
-            }
-        };
-        this.updateUserStatus = this.updateUserStatus.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+        this.getUserStatus = this.getUserStatus.bind(this);
+        this.getUserToken = this.getUserToken.bind(this);
     }
 
-    updateUserStatus(value) {
-        localStorage.setItem('user', value);
+    login(token) {
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('token', token);
+    }
+
+    logout() {
+        localStorage.clear();
+    }
+
+    getUserStatus() {
+        if(localStorage.getItem('isLoggedIn')) return true;
+        return false;
+    }
+
+    getUserToken() {
+        return localStorage.getItem('token');
     }
 
     render() {
@@ -27,7 +39,10 @@ class AuthProvider extends React.Component {
             <AuthContext.Provider
                 value={{
                     user: localStorage.getItem('user'),
-                    updateUserStatus: this.updateUserStatus
+                    login: this.login,
+                    logout: this.logout,
+                    getUserStatus: this.getUserStatus,
+                    getUserToken: this.getUserToken
                 }}
             >
                 {this.props.children}
