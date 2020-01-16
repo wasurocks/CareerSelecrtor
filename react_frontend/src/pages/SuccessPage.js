@@ -1,12 +1,11 @@
 import React from "react";
 import "../styles/SuccessPage.css";
-import LoginForm from "../components/LoginForm.js";
 import Logo from "../components/Logo.js";
 
 // UI imports
-import { Link as RouterLink } from "react-router-dom";
-import { ThemeProvider, Link } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { Redirect } from "react-router-dom";
 
 const theme = createMuiTheme({
     palette: {
@@ -19,14 +18,28 @@ const theme = createMuiTheme({
 class SuccessPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            redirect: false
+        }
+        this.handleClick = this.handleClick.bind(this);
     }
+    
+    handleClick(event) {
+        event.preventDefault();
+        localStorage.removeItem('user');
+        this.setState({redirect: true});
+    }
+
     render() {
+        if (this.state.redirect) return <Redirect to="/login"/>
         return (
             <ThemeProvider theme={theme}>
                 <div className="success">
                     <Logo />
                     <div className="box">
                         <span>You are logged in</span>
+                        <br/>
+                        <span onClick={this.handleClick}>Log out</span>
                     </div>
                 </div>
             </ThemeProvider>
