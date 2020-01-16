@@ -7,6 +7,7 @@ import { ThemeProvider, Link, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import Q1 from "./questions/Q1";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,36 +24,43 @@ class SuccessPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false
+            isLoggedOut: false,
+            isStarted: false
         };
-        this.handleClick = this.handleClick.bind(this);
+        this.logout = this.logout.bind(this);
+        this.start = this.start.bind(this);
     }
 
-    handleClick(event) {
+    logout(event) {
         event.preventDefault();
         this.context.logout();
-        this.setState({ redirect: true });
+        this.setState({ isLoggedOut: true });
+    }
+
+    start(event) {
+        event.preventDefault();
+        this.setState({ isStarted: true })
     }
 
     render() {
         if (this.state.redirect) return <Redirect to="/login" />;
+        if (this.state.isStarted) return <Redirect to="/questions"/>;
         return (
             <ThemeProvider theme={theme}>
                 <div className="success">
                     <Logo />
                     <div className="box">
-                        <span>Press start to continue</span>
+                        <span onClick={this.handle}>Press start to continue</span>
                         <Button
                             variant="contained"
                             color="secondary"
                             className="button"
-                            type="submit"
-                            disabled={this.state.isSubmitting}
+                            onClick={this.start}
                         >
                             START
                         </Button>
                     </div>
-                    <Link onClick={this.handleClick} className="log-out">
+                    <Link onClick={this.logout} className="log-out">
                         Logout
                     </Link>
                 </div>

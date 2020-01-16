@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Q1() {
+export default function Questions() {
     return(
         <div>
             Question 1

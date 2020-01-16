@@ -3,10 +3,10 @@ import { Redirect } from "react-router-dom";
 import SuccessPage from "./pages/SuccessPage.js";
 import { AuthContext } from "./AuthContext.js";
 
-const ProtectedRoute = () => {
+const ProtectedRoute = (props) => {
     const context = React.useContext(AuthContext);
     if (context.getUserStatus()){
-        return <SuccessPage/>;
+        return props.children;
     }
     else return <Redirect to="/login"/>;
 };

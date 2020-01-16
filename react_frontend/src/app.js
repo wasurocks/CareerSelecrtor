@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage.js";
 import RegisterPage from "./pages/RegisterPage.js";
 import SuccessPage from "./pages/SuccessPage.js";
 import ErrorPage from "./pages/ErrorPage.js";
+import Questions from "./pages/questions/Questions.js";
 
 class App extends React.Component {
     render() {
@@ -13,7 +14,8 @@ class App extends React.Component {
             <Switch>
                 <Route exact path={["/", "/login"]} component={LoginPage} />
                 <Route exact path="/register" component={RegisterPage} />
-                <ProtectedRoute exact path="/success" component={SuccessPage} />
+                <ProtectedRoute exact path="/success"><SuccessPage/></ProtectedRoute>
+                <ProtectedRoute exact path="/questions"><Questions/></ProtectedRoute>
                 <Route component={ErrorPage} />
             </Switch>
         );
