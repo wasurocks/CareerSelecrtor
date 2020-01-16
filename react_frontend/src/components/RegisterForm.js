@@ -4,8 +4,6 @@ import React from "react";
 import "../styles/RegisterPage.css";
 
 // Form import
-import { Formik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
 
 // Routes import
@@ -28,152 +26,170 @@ export default class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isRegistered: false
+            isRegistered: false,
+            isSubmitting: false,
+            fields: {
+                email: "",
+                password: "",
+                password2: ""
+            },
+            errors: {},
+            touched: {
+                email: false,
+                password: false,
+                password2: false
+            }
         };
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleValidation = this.handleValidation.bind(this);
     }
 
-    handleSubmit = async (
-        values,
-        { setSubmitting, resetForm, setFieldTouched }
-    ) => {
-        setTimeout(() => {
-            console.log("Registering ", values);
-            // Declare content type
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            };
-            axios
-                .post(
-                    `http://localhost:8000/api/users/register`,
-                    values,
-                    config
-                )
-                // In case of successful registration
-                .then(res => {
-                    if (res.status == 201) {
-                        console.log("Success");
-                        alert("Registration successful");
-                        this.setState({ isRegistered: true });
+    handleValidation = () => {
+        let errors = {};
+        let testRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const { email, password, password2 } = this.state.fields;
+        if (email === "") errors.email = "Email is required";
+        if (!email.match(testRegex)) errors.email = "Email is invalid";
+        if (password === "") errors.password = "Password cannot be empty";
+        if (password2 === "")
+            errors.password2 = "Confirm password cannot be empty";
+        if (password !== password2) errors.password2 = "Passwords must match";
+        this.setState({ errors });
+        // If the errors object is empty, returns true = valid form
+        return Object.entries(errors).length === 0;
+    };
+
+    handleChange = event => {
+        let fields = this.state.fields;
+        fields[event.target.name] = event.target.value;
+        this.setState({ fields });
+    };
+
+    handleBlur = event => {
+        let touched = this.state.touched;
+        touched[event.target.name] = true;
+        this.setState({ touched });
+        this.handleValidation();
+    };
+
+    handleSubmit = async event => {
+        event.preventDefault();
+
+        if (this.handleValidation()) {
+            this.setState({ isSubmitting: true });
+            setTimeout(() => {
+                console.log("Registering ", this.state.fields);
+                // Declare content type
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json"
                     }
-                })
-                // Catch errors
-                .catch(err => {
-                    if (err.response.data.email == "User already exists") {
-                        console.log("User already exists");
-                        alert("User already exists");
-                    } else {
-                        // Should never happen but just in case
-                        console.log("Invalid information");
-                        alert("Invalid information");
-                    }
-                });
-            // Reset entire form to blank
-            resetForm({});
-            // Set all fields unfilled and remove error messages
-            Object.keys(values).forEach(key => {
-                setFieldTouched(values[key], false);
-            });
-            // Set submitting state to false
-            setSubmitting(false);
-        }, 500);
+                };
+                axios
+                    .post(
+                        `http://localhost:8000/api/users/register`,
+                        this.state.fields,
+                        config
+                    )
+                    // In case of successful registration
+                    .then(res => {
+                        if (res.status == 201) {
+                            console.log("Success");
+                            this.setState({ isRegistered: true });
+                        }
+                    })
+                    // Catch errors
+                    .catch(err => {
+                        if (err) {
+                            if (
+                                err.response.data.email == "User already exists"
+                            ) {
+                                console.log("User already exists");
+                                alert("User already exists");
+                            } else {
+                                // Should never happen but just in case
+                                console.log("Invalid information");
+                                alert("Invalid information");
+                            }
+                            this.setState({ isSubmitting: false });
+                        }
+                    });
+            }, 500);
+        }
     };
 
     render() {
         // If the registration is successful, redirect the user to the login page
-        if (this.state.isRegistered) {
-            return <Redirect to="/login" />;
-        }
+        if (this.state.isRegistered) return <Redirect to="/login" />;
+
         return (
-            <Formik
-                initialValues={{ email: "", password: "", password2: "" }}
-                onSubmit={this.handleSubmit}
-                validationSchema={Yup.object().shape({
-                    email: Yup.string()
-                        .required("Email is required")
-                        .matches(
-                            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                            "Invalid email"
-                        ),
-                    password: Yup.string()
-                        .required("Password is required")
-                        .min(6, "Password must be between 6-12 characters")
-                        .max(12, "Password must be between 6-12 characters"),
-                    password2: Yup.string()
-                        .required("Confirm password is required")
-                        .oneOf(
-                            [Yup.ref("password"), null],
-                            "Passwords must match"
-                        )
-                })}
-                // Pass values as render props
-                render={({
-                    values,
-                    errors,
-                    touched,
-                    isSubmitting,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit
-                }) => (
-                    <ThemeProvider theme={theme}>
-                        <form onSubmit={handleSubmit} className="register-form">
-                            <TextField
-                                name="email"
-                                type="text"
-                                helperText={
-                                    errors.email && touched.email
-                                        ? errors.email
-                                        : "Email"
-                                }
-                                value={values.email}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={errors.email && touched.email}
-                            />
+            <ThemeProvider theme={theme}>
+                <form onSubmit={this.handleSubmit} className="login-form">
+                    <TextField
+                        name="email"
+                        type="text"
+                        helperText={
+                            this.state.errors.email && this.state.touched.email
+                                ? this.state.errors.email
+                                : "Email"
+                        }
+                        value={this.state.fields.email}
+                        onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        error={
+                            this.state.errors.email && this.state.touched.email
+                        }
+                    />
 
-                            <TextField
-                                name="password"
-                                type="password"
-                                helperText={
-                                    errors.password && touched.password
-                                        ? errors.password
-                                        : "Password"
-                                }
-                                value={values.password}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={errors.password && touched.password}
-                            />
+                    <TextField
+                        name="password"
+                        type="password"
+                        helperText={
+                            this.state.errors.password &&
+                            this.state.touched.password
+                                ? this.state.errors.password
+                                : "Password"
+                        }
+                        value={this.state.fields.password}
+                        onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        error={
+                            this.state.errors.password &&
+                            this.state.touched.password
+                        }
+                    />
 
-                            <TextField
-                                name="password2"
-                                type="password"
-                                helperText={
-                                    errors.password2 && touched.password2
-                                        ? errors.password2
-                                        : "Confirm password"
-                                }
-                                value={values.password2}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={errors.password2 && touched.password2}
-                            />
+                    <TextField
+                        name="password2"
+                        type="password"
+                        helperText={
+                            this.state.errors.password2 &&
+                            this.state.touched.password2
+                                ? this.state.errors.password2
+                                : "Confirm password"
+                        }
+                        value={this.state.fields.password2}
+                        onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        error={
+                            this.state.errors.password2 &&
+                            this.state.touched.password2
+                        }
+                    />
 
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className="button"
-                                type="submit"
-                                disabled={isSubmitting}
-                            >
-                                REGISTER
-                            </Button>
-                        </form>
-                    </ThemeProvider>
-                )}
-            />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className="button"
+                        type="submit"
+                        disabled={this.state.isSubmitting}
+                    >
+                        REGISTER
+                    </Button>
+                </form>
+            </ThemeProvider>
         );
     }
 }

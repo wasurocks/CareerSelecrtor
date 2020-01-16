@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
-import AuthContext from "./AuthContext.js";
+import React from "react";
+import { Redirect } from "react-router-dom";
 import SuccessPage from "./pages/SuccessPage.js";
 
 const ProtectedRoute = () => {
-    const value = useContext(AuthContext);
-    if (value.user.isLoggedIn)
+    if (localStorage.getItem('user')){
         return <SuccessPage/>;
+    }
     else return <Redirect to="/login"/>;
 };
 
