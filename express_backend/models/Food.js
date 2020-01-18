@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 // Create Schema for users of the database
 const FoodSchema = new Schema({
+
+    // searchparams according to this
     name: {
         type: String
     },

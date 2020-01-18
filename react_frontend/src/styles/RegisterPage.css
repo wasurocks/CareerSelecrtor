@@ -21,8 +21,6 @@
 
 .register-form .button {
     grid-row: 7;
-    position: relative;
-    bottom: 5px;
     width: 40%;
     height: 32px;
     justify-self: center;

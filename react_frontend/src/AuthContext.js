@@ -1,11 +1,6 @@
 import React from "react";
 
-const AuthContext = React.createContext({
-    user: { isLoggedIn: false },
-    updateUserStatus: () => {
-        console.log("Default");
-    }
-});
+const AuthContext = React.createContext();
 
 class AuthProvider extends React.Component {
     constructor(props) {

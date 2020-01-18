@@ -20,8 +20,6 @@
 }
 
 .login-form .button {
-    position: relative;
-    bottom: 5px;
     grid-row: 5;
     width: 40%;
     height: 32px;

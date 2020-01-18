@@ -10,6 +10,7 @@ import { AuthContext } from "../AuthContext";
 import Q1 from "./questions/Q1";
 
 const theme = createMuiTheme({
+    shadows: ["none"],
     palette: {
         primary: {
             main: "#006CFF"
@@ -43,7 +44,7 @@ class SuccessPage extends React.Component {
     }
 
     render() {
-        if (this.state.redirect) return <Redirect to="/login" />;
+        if (this.state.isLoggedOut) return <Redirect to="/login" />;
         if (this.state.isStarted) return <Redirect to="/questions"/>;
         return (
             <ThemeProvider theme={theme}>

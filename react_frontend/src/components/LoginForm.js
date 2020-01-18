@@ -16,6 +16,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { AuthContext } from "../AuthContext.js";
 
 const theme = createMuiTheme({
+    shadows: ["none"],
     palette: {
         primary: {
             main: "#49E198"

@@ -15,6 +15,7 @@ import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
+    shadows: ["none"],
     palette: {
         primary: {
             main: "#49E198"

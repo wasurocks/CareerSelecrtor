@@ -10,6 +10,7 @@ import { Redirect } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 const theme = createMuiTheme({
+    shadows: ["none"],
     palette: {
         primary: {
             main: "#909090"

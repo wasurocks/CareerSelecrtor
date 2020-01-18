@@ -38,7 +38,7 @@
     color: white;
 }
 
-.log-out {
+.success .log-out {
     grid-row: 4;
     grid-column: 2;
     justify-self: center;
@@ -47,7 +47,7 @@
     font-size: 1em;
 }
 
-.log-out:hover {
+.success .log-out:hover {
     cursor: pointer;
     color: #464646;
 }

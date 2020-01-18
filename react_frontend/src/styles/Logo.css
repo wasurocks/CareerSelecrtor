@@ -13,26 +13,26 @@
     justify-self: center;
 }
 
-.title {
+.logo .title {
     overflow: hidden;
     grid-row: 3;
     justify-self: center;
 }
 
-.title .text {
+.logo .title .text {
     font-family: "PT Sans Caption", sans-serif;
     font-size: 3.2em;
     font-weight: bold;
     color: #49d290;
 }
 
-.subtitle {
+.logo .subtitle {
     overflow: hidden;
     grid-row: 5;
     justify-self: center;
 }
 
-.subtitle .text {
+.logo .subtitle .text {
     font-family: "PT Sans Caption", sans-serif;
     font-size: 1.5em;
     font-weight: normal;
