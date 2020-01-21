@@ -1,5 +1,5 @@
 .backtab {
-    border-bottom: solid 2px #E3E7EF;
+    border-bottom: solid 1px #E3E7EF;
     grid-row: 1;
     grid-column: 1/4;
     display: grid;

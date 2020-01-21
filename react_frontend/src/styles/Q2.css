@@ -2,7 +2,7 @@
     background-color: #F5F5F5;
     grid-row: 2;
     display: grid;
-    grid-template-rows: 98fr 138fr 81fr 43fr 81fr 43fr 81fr 43fr 81fr 43fr 81fr 140fr;
+    grid-template-rows: 98fr 138fr 81fr 43fr 81fr 43fr 81fr 43fr 81fr 140fr;
     grid-template-columns: 746fr 429fr 746fr;
 }
 
@@ -17,12 +17,26 @@
     grid-column: 2;
 }
 
-/*
-.q1 .boxes {
-    grid-row: 2;
+.q2 .soup {
+    grid-row: 3;
     grid-column: 2;
-    display: grid;
-    grid-template-columns: repeat(4, 360fr);
-    column-gap: 4.167%;
+    background-color: white;
 }
-*/
+
+.q2 .main {
+    grid-row: 5;
+    grid-column: 2;
+    background-color: white;
+}
+
+.q2 .salad {
+    grid-row: 7;
+    grid-column: 2;
+    background-color: white;
+}
+
+.q2 .dessert {
+    grid-row: 9;
+    grid-column: 2;
+    background-color: white;
+}
