@@ -6,12 +6,15 @@
     grid-template-rows: 360fr 80fr;
     border-radius: 10px;
     box-shadow: 1px 1px 5px 1px gainsboro;
-    opacity: 0.94;
+    opacity: 0.9;
+    transition:all .3s ease;
 }
 
 .picBox:hover {
     opacity: 1.0;
     cursor: pointer;
+    box-shadow: 1px 1px 10px 3px gainsboro;
+    transition:all .3s ease;
 }
 
 /* Children of each box */

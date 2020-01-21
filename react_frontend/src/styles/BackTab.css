@@ -1,0 +1,22 @@
+.backtab {
+    border-bottom: solid 2px #E3E7EF;
+    grid-row: 1;
+    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 35fr 75fr 1810fr;
+}
+
+.backtab .back {
+    grid-column: 2;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+    color: #006CFF;
+}
+
+.backtab .back:hover {
+    cursor: pointer;
+    color: rgb(46, 110, 199)
+}

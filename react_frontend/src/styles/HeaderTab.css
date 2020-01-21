@@ -1,0 +1,54 @@
+.headertab {
+    grid-row: 1;
+    display: grid;
+    grid-template-rows: 33fr 74fr 33fr;
+    grid-template-columns: 35fr 75fr 18fr 70fr 1484fr 88fr 28fr 87fr 35fr;
+}
+
+.headertab .mini-logo {
+    width: 100%;
+    height: auto;
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.headertab .log-out {
+    text-align: center;
+    align-self: center;
+    color: #B1B9C9;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+    grid-row: 2;
+    grid-column: 8;
+}
+
+.headertab .log-out:hover {
+    color: rgb(40, 41, 44);
+    cursor: pointer;
+}
+
+.headertab .home {
+    text-align: center;
+    align-self: center;
+    color: #B1B9C9;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+    grid-row: 2;
+    grid-column: 6;
+}
+
+.headertab .home:hover {
+    color: rgb(40, 41, 44);
+    cursor: pointer;
+}
+
+.headertab .logo-text {
+    position: relative;
+    top: 2px;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+    grid-row: 2;
+    grid-column: 4;
+    justify-self: center;
+    align-self: center;
+}

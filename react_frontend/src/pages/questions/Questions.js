@@ -1,51 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import Q1 from "./Q1";
-import logo from "../../logo/foodicon.png";
+import Q2 from "./Q2";
 import "../../styles/Questions.css";
+import HeaderTab from "../../components/HeaderTab";
+import { QuestionContext } from "../../QuestionContext";
 
-class Questions extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            question: 1,
-            searchparams: {
-                nationality: null,
-                type: null,
-                spicy: null,
-                veg: null
-            }
-        };
-        this.showQuestion = this.showQuestion.bind(this);
-    }
+export default function Questions() {
+    const context = useContext(QuestionContext);
 
-    showQuestion(number) {
+    function displayQuestion(number) {
         switch (number) {
             case 1:
                 return <Q1 />;
-                break;
             case 2:
-                return <Q1 />;
-                break;
+                return <Q2 />;
             case 3:
-                return <Q1 />;
-                break;
+                return <Q2 />;
             case 4:
-                return <Q1 />;
+                return <Q2 />;
         }
     }
 
-    render() {
-        return (
-            <div className="questions">
-                <div className="row-1">
-                    <img src={logo} className="mini-logo" />
-                    <div className="log-out">Logout</div>
-                </div>
-                {this.showQuestion(this.state.question)}
-                <div className="row-3"></div>
-            </div>
-        );
-    }
+    if (context.question == 4) return <div>RESULTS</div>;
+    return (
+        <div className="questions">
+            <HeaderTab />
+            {displayQuestion(context.question)}
+            <div className="row-3"/>
+        </div>
+    );
 }
-
-export default Questions;

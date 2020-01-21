@@ -1,13 +1,9 @@
 import React from "react";
 import "../styles/PicBox.css";
 
-const PicBox = props => {
-    return (
-        <div className="picBox">
-            <img className="picImg" src={props.img} />
-            <div className="picText">{props.text}</div>
-        </div>
-    );
-};
-
-export default PicBox;
+export default (props) => (
+    <div className="picBox" onClick={props.onClick}>
+        <img className="picImg" src={props.img} />
+        <div className="picText">{props.text}</div>
+    </div>
+);

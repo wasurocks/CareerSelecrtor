@@ -12,32 +12,6 @@
 
 /* Children of questions */
 
-.questions .row-1 {
-    grid-row: 1;
-    display: grid;
-    grid-template-rows: 33fr 74fr 33fr;
-    grid-template-columns: 35fr 75fr 1688fr 87fr 35fr;
-}
-
-/* Children of row 1 */
-
-.row-1 .mini-logo {
-    width: 100%;
-    height: auto;
-    grid-row: 2;
-    grid-column: 2;
-}
-
-.row-1 .log-out {
-    justify-self: center;
-    align-self: center;
-    color: #B1B9C9;
-    font-family: "PT Sans Caption", sans-serif;
-    font-size: 1em;
-    grid-row: 2;
-    grid-column: 4;
-}
-
 /***/
 
 .questions .row-3 {
