@@ -38,7 +38,7 @@ router.post("/register", (req, res) => {
                     newUser.password = hash;
                     newUser
                         .save()
-                        .then(user => res.json(user))
+                        .then(user => res.status(201).json(user))
                         .catch(err => console.log(err));
                 });
             });
@@ -50,6 +50,7 @@ router.post("/register", (req, res) => {
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
+    console.log(req.body);
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
     // Check validation
@@ -81,7 +82,7 @@ router.post("/login", (req, res) => {
                         expiresIn: 31556926 // 1 year in seconds
                     },
                     (err, token) => {
-                        res.json({
+                        res.status(201).json({
                             success: true,
                             token: "Bearer " + token
                         });

@@ -1,7 +1,7 @@
 import React from "react";
 
 // CSS
-import "../styles/LoginPage.css";
+import "../styles/RegisterPage.css";
 
 // Form import
 import axios from "axios";
@@ -13,7 +13,6 @@ import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { AuthContext } from "../AuthContext.js";
 
 const theme = createMuiTheme({
     shadows: ["none"],
@@ -24,22 +23,22 @@ const theme = createMuiTheme({
     }
 });
 
-export default class LoginForm extends React.Component {
-    static contextType = AuthContext;
-
+export default class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: false,
+            isRegistered: false,
             isSubmitting: false,
             fields: {
                 email: "",
-                password: ""
+                password: "",
+                password2: ""
             },
             errors: {},
             touched: {
                 email: false,
-                password: false
+                password: false,
+                password2: false
             }
         };
         this.handleBlur = this.handleBlur.bind(this);
@@ -51,10 +50,13 @@ export default class LoginForm extends React.Component {
     handleValidation = () => {
         let errors = {};
         let testRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const { email, password } = this.state.fields;
+        const { email, password, password2 } = this.state.fields;
         if (email === "") errors.email = "Email is required";
         if (!email.match(testRegex)) errors.email = "Email is invalid";
         if (password === "") errors.password = "Password cannot be empty";
+        if (password2 === "")
+            errors.password2 = "Confirm password cannot be empty";
+        if (password !== password2) errors.password2 = "Passwords must match";
         this.setState({ errors });
         // If the errors object is empty, returns true = valid form
         return Object.entries(errors).length === 0;
@@ -79,7 +81,7 @@ export default class LoginForm extends React.Component {
         if (this.handleValidation()) {
             this.setState({ isSubmitting: true });
             setTimeout(() => {
-                console.log("Logging in ", this.state.fields);
+                console.log("Registering ", this.state.fields);
                 // Declare content type
                 const config = {
                     headers: {
@@ -88,26 +90,31 @@ export default class LoginForm extends React.Component {
                 };
                 axios
                     .post(
-                        `http://localhost:8000/api/users/login`,
+                        `http://localhost:8000/api/users/register`,
                         this.state.fields,
                         config
                     )
-                    // In case of successful login
+                    // In case of successful registration
                     .then(res => {
                         if (res.status == 201) {
                             console.log("Success");
-                            this.context.login(res.data.token);
-                            this.setState({ isLoggedIn: true });
+                            this.setState({ isRegistered: true });
                         }
                     })
                     // Catch errors
                     .catch(err => {
                         if (err) {
-                            console.log("Invalid email/password");
+                            if (
+                                err.response.data.email == "User already exists"
+                            ) {
+                                console.log("Account already exists");
+                                alert("Account already exists");
+                            } else {
+                                // Should never happen but just in case
+                                console.log("Invalid information");
+                                alert("Invalid information");
+                            }
                             this.setState({ isSubmitting: false });
-                            alert(
-                                "You have entered an invalid email or password"
-                            );
                         }
                     });
             }, 500);
@@ -115,12 +122,12 @@ export default class LoginForm extends React.Component {
     };
 
     render() {
-        // If the login is successful, redirect the user to the success page
-        if (this.state.isLoggedIn) return <Redirect to="/success" />;
+        // If the registration is successful, redirect the user to the login page
+        if (this.state.isRegistered) return <Redirect to="/login" />;
 
         return (
             <ThemeProvider theme={theme}>
-                <form onSubmit={this.handleSubmit} className="login-form">
+                <form onSubmit={this.handleSubmit} className="register-form">
                     <TextField
                         name="email"
                         type="text"
@@ -155,6 +162,24 @@ export default class LoginForm extends React.Component {
                         }
                     />
 
+                    <TextField
+                        name="password2"
+                        type="password"
+                        helperText={
+                            this.state.errors.password2 &&
+                            this.state.touched.password2
+                                ? this.state.errors.password2
+                                : "Confirm password"
+                        }
+                        value={this.state.fields.password2}
+                        onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        error={
+                            this.state.errors.password2 &&
+                            this.state.touched.password2
+                        }
+                    />
+
                     <Button
                         variant="contained"
                         color="primary"
@@ -162,7 +187,7 @@ export default class LoginForm extends React.Component {
                         type="submit"
                         disabled={this.state.isSubmitting}
                     >
-                        LOGIN
+                        REGISTER
                     </Button>
                 </form>
             </ThemeProvider>

@@ -1,4 +1,4 @@
-.login {
+.error {
     position: fixed;
     display: grid;
     grid-template-columns: 740fr 380fr 740fr;
@@ -11,20 +11,31 @@
     right: 0;
 }
 
-.login-form {
+.error .box {
     display: grid;
-    grid-template-rows: 41fr 55fr 42fr 56fr 66fr;
+    grid-template-rows: 41fr 104fr 55fr 60fr;
+    grid-template-columns: 1fr 2fr 1fr;
     overflow: hidden;
     grid-row: 3;
     grid-column: 2;
 }
 
-.login-form .button {
-    grid-row: 5;
-    width: 40%;
-    height: 32px;
+.error .box > span {
+    grid-row: 4;
+    grid-column: 2;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
     justify-self: center;
-    color: white;
+    align-self: center;
+    text-align: center;
+}
+
+.giphy-embed {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+    pointer-events: none;
+    justify-self: center;
 }
 
 .redirect {
@@ -34,6 +45,10 @@
     font-size: 1em;
     justify-self: center;
     align-self: center;
+}
+
+.redirect > strong {
+    color: #49d290;
 }
 
 .redirect:hover {

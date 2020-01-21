@@ -1,0 +1,26 @@
+.q1 {
+    background-color: #F5F5F5;
+    grid-row: 2;
+    display: grid;
+    grid-template-rows: 200fr 460fr 100fr;
+    grid-template-columns: 150fr 1620fr 150fr;
+}
+
+.q1 .title {
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 2em;
+    color: #707070;
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.q1 .boxes {
+    grid-row: 2;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 360fr);
+    column-gap: 4.167%;
+}

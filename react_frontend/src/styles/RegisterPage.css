@@ -1,0 +1,28 @@
+.register {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 740fr 380fr 740fr;
+    grid-template-rows: 152.5fr 460fr 350.5fr 60fr;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.register-form {
+    display: grid;
+    grid-template-rows: 41fr 55fr 42fr 56fr 41fr 55fr 66fr;
+    overflow: hidden;
+    grid-row: 3;
+    grid-column: 2;
+}
+
+.register-form .button {
+    grid-row: 7;
+    width: 40%;
+    height: 32px;
+    justify-self: center;
+    color: white;
+}

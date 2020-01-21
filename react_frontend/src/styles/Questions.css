@@ -1,0 +1,21 @@
+.questions {
+    position: fixed;
+    display: grid;
+    grid-template-rows: 140fr 830fr 110fr;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+} 
+
+/* Children of questions */
+
+/***/
+
+.questions .row-3 {
+    box-shadow: 0px -1px 4px 1px gainsboro;
+}
+
+/* Children of row 3 */

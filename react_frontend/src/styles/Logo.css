@@ -1,0 +1,40 @@
+.logo {
+    display: grid;
+    grid-row: 2;
+    grid-column: 2;
+    grid-template-rows: 214fr 28fr 80fr 14fr 42fr 20fr;
+}
+
+.logo .icon {
+    position: relative;
+    overflow: hidden;
+    grid-row: 1;
+    max-width: 25vh;
+    justify-self: center;
+}
+
+.logo .title {
+    overflow: hidden;
+    grid-row: 3;
+    justify-self: center;
+}
+
+.logo .title .text {
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 3.2em;
+    font-weight: bold;
+    color: #49d290;
+}
+
+.logo .subtitle {
+    overflow: hidden;
+    grid-row: 5;
+    justify-self: center;
+}
+
+.logo .subtitle .text {
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1.5em;
+    font-weight: normal;
+    color: #707070;
+}

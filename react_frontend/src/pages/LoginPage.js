@@ -1,12 +1,13 @@
 import React from "react";
-import "../styles/LoginPage.css"
-import logo from '../logo/foodicon.png';
-import LoginForm from "../components/LoginForm.js"
+import "../styles/LoginPage.css";
+import LoginForm from "../components/LoginForm.js";
+import Logo from "../components/Logo.js";
 
 // UI imports
-import Link from "@material-ui/core/Link";
-import { ThemeProvider, TextField } from "@material-ui/core";
+import { Link as RouterLink, Redirect } from "react-router-dom";
+import { ThemeProvider, Link } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { AuthContext } from "../AuthContext";
 
 const theme = createMuiTheme({
     palette: {
@@ -17,19 +18,22 @@ const theme = createMuiTheme({
 });
 
 export default function LoginPage() {
+    const context = React.useContext(AuthContext);
+    if (context.getUserStatus()) return <Redirect to="/success" />;
+    
     return (
         <ThemeProvider theme={theme}>
-            <div id="main">
-            <img src={logo} id="logo"/>
-            <div id="box-text-title">
-                <span>FoodBuddy</span>
-            </div>
-            <div id="box-text-subtitle">
-                <span>Your friend in food</span>
-            </div>
-            <LoginForm />
-            <Link id="register">Need an account? Register <strong>here</strong></Link>
+            <div className="login">
+                <Logo />
+                <LoginForm />
+                <Link
+                    className="redirect"
+                    component={RouterLink}
+                    to="/register"
+                >
+                    Need an account? Register <strong>HERE</strong>
+                </Link>
             </div>
         </ThemeProvider>
     );
-};
+}

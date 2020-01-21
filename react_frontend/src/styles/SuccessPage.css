@@ -1,4 +1,4 @@
-.login {
+.success {
     position: fixed;
     display: grid;
     grid-template-columns: 740fr 380fr 740fr;
@@ -11,31 +11,43 @@
     right: 0;
 }
 
-.login-form {
+.success .box {
     display: grid;
-    grid-template-rows: 41fr 55fr 42fr 56fr 66fr;
+    grid-template-rows: 41fr 25fr 72fr 56fr 66fr;
     overflow: hidden;
     grid-row: 3;
     grid-column: 2;
 }
 
-.login-form .button {
-    grid-row: 5;
-    width: 40%;
-    height: 32px;
-    justify-self: center;
-    color: white;
-}
-
-.redirect {
-    grid-row: 4;
-    grid-column: 2;
+.success .box > span {
+    grid-row: 3;
     font-family: "PT Sans Caption", sans-serif;
     font-size: 1em;
     justify-self: center;
     align-self: center;
+    text-align: center;
+    color: #464646;
 }
 
-.redirect:hover {
+.success .box .button {
+    grid-row: 5;
+    width: 40%;
+    height: 32px;
+    justify-self: center;
+    align-self: center;
+    color: white;
+}
+
+.success .log-out {
+    grid-row: 4;
+    grid-column: 2;
+    justify-self: center;
+    align-self: center;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+}
+
+.success .log-out:hover {
+    cursor: pointer;
     color: #464646;
 }
