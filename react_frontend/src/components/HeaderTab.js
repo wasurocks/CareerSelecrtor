@@ -21,14 +21,28 @@ export default function HeaderTab() {
         setHome(true);
     }
 
-    if(isLoggedOut) return <Redirect to="/login" />;
-    if(isGoingHome) return <Redirect to="/"/>;
+    if (isLoggedOut) {
+        setLogout(false);
+        return <Redirect to="/login" />;
+    }
+    if (isGoingHome) {
+        setHome(false);
+        return <Redirect to="/" />;
+    }
     return (
         <div className="headertab">
-            <div className="logo-text">Food<br/>Selector</div>
+            <div className="logo-text">
+                Food
+                <br />
+                Selector
+            </div>
             <img src={logo} className="mini-logo" />
-            <div className="home" onClick={home}>Home</div>
-            <div className="log-out" onClick={logout}>Logout</div>
+            <div className="home" onClick={home}>
+                Home
+            </div>
+            <div className="log-out" onClick={logout}>
+                Logout
+            </div>
         </div>
     );
 }

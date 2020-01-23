@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "../../styles/Q1.css";
 import PicBox from "../../components/PicBox.js";
 import { QuestionContext } from "../../QuestionContext";
@@ -6,9 +6,9 @@ import { QuestionContext } from "../../QuestionContext";
 export default function Q1() {
     const context = useContext(QuestionContext);
 
-    function onClick(event, value) {
+    function handleClick(event) {
         event.preventDefault();
-        context.setParam("nationality", value);
+        context.setParam("nationality", event.currentTarget.id);
         context.nextQuestion();
     }
 
@@ -18,23 +18,24 @@ export default function Q1() {
             <div className="boxes">
                 <PicBox
                     img="https://foodselector.sgp1.digitaloceanspaces.com/photos/thai-food.jpg"
-                    text="Thai"
-                    onClick={(e) => onClick(e, "thai")}
+                    value="thai"
+                    onClick={handleClick}
                 />
                 <PicBox
                     img="https://foodselector.sgp1.digitaloceanspaces.com/photos/indian-food.jpg"
-                    text="Indian"
-                    onClick={(e) => onClick(e, "indian")}
+                    value="indian"
+                    onClick={handleClick}
+                    
                 />
                 <PicBox
                     img="https://foodselector.sgp1.digitaloceanspaces.com/photos/western-food.jpg"
-                    text="Western"
-                    onClick={(e) => onClick(e, "western")}
+                    value="western"
+                    onClick={handleClick}
                 />
                 <PicBox
                     img="https://foodselector.sgp1.digitaloceanspaces.com/photos/japanese-food.jpg"
-                    text="Japanese"
-                    onClick={(e) => onClick(e, "japanese")}
+                    value="japanese"
+                    onClick={handleClick}
                 />
             </div>
         </div>

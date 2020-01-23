@@ -28,11 +28,12 @@
 }
 
 .picBox .picText {
-    text-align: center;
-    align-self: center;
-    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: "PT Sans Caption", sans-serif;
     font-size: 1.4em;
+    text-transform: capitalize;
     color: #707070;
     grid-row: 2;
 }

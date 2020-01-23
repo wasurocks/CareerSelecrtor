@@ -11,7 +11,10 @@ export default function BackTab() {
         setBack(true);
     }
 
-    if (isGoingBack) context.previousQuestion();
+    if (isGoingBack) {
+        setBack(false);
+        context.previousQuestion();
+    }
     return (
         <div className="backtab">
             <div className="back" onClick={back}>
