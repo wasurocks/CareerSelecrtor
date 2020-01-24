@@ -13,6 +13,7 @@ export default props => {
             <div className="title">{props.text}</div>
             <RadioGroup
                 className="radiogroup"
+                key={props.type}
                 type={props.type}
                 values={props.values}
             />

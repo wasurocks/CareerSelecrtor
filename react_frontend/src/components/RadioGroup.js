@@ -13,13 +13,6 @@ export default props => {
         return dict;
     };
 
-    // Updates values according to props because useState doesn't update automatically
-    /*useEffect(() => {
-        console.log("Changed");
-        setValues(toDict(props.values));
-        console.log(values); // Correct values
-    }, [props.values]);*/
-
     // Converts props.values to a dictionary of true/false
     const [values, setValues] = useState(toDict(props.values));
 
@@ -38,7 +31,6 @@ export default props => {
     // Returns an array of radio elements for render
     const createChoices = info => {
         let choices = [];
-        console.log(values); // Wrong values 
         info.map(element => {
             choices.push(
                 <Radio

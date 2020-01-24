@@ -9,16 +9,41 @@ import FooterTab from "../../components/FooterTab";
 export default function Questions() {
     const context = useContext(QuestionContext);
 
+    function displayDictionary(dict) {
+        let temp = { ...dict };
+        let toRender = [];
+        Object.keys(temp).forEach(key => toRender.push(<div>{temp[key]}</div>));
+        return toRender;
+    }
+
     function displayQuestion(number) {
         switch (number) {
             case 1:
                 return <Q1 />;
             case 2:
-                return <QSelection text="Select dish type" type="type" values={["soup", "main", "salad", "dessert"]}/>;
+                return (
+                    <QSelection
+                        text="Select dish type"
+                        type="type"
+                        values={["soup", "main", "salad", "dessert"]}
+                    />
+                );
             case 3:
-                return <QSelection text="Want it spicy?" type="spicy" values={["yes", "no"]}/>;
+                return (
+                    <QSelection
+                        text="Want it spicy?"
+                        type="spicy"
+                        values={["yes", "no"]}
+                    />
+                );
             case 4:
-                return <QSelection text="Are you vegetarian?" type="veg" values={["yes", "no"]}/>;
+                return (
+                    <QSelection
+                        text="Are you vegetarian?"
+                        type="veg"
+                        values={["yes", "no"]}
+                    />
+                );
         }
     }
 
@@ -27,7 +52,7 @@ export default function Questions() {
         <div className="questions">
             <HeaderTab />
             {displayQuestion(context.question)}
-            <FooterTab showButtons={context.question != 1}/>
+            <FooterTab showButtons={context.question != 1} />
         </div>
     );
 }
