@@ -1,20 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Q1 from "./Q1";
 import QSelection from "./QSelection";
 import "../../styles/Questions.css";
 import HeaderTab from "../../components/HeaderTab";
 import { QuestionContext } from "../../QuestionContext";
 import FooterTab from "../../components/FooterTab";
+import CurrentResults from "../results/CurrentResults";
 
 export default function Questions() {
     const context = useContext(QuestionContext);
-
-    function displayDictionary(dict) {
-        let temp = { ...dict };
-        let toRender = [];
-        Object.keys(temp).forEach(key => toRender.push(<div>{temp[key]}</div>));
-        return toRender;
-    }
 
     function displayQuestion(number) {
         switch (number) {
@@ -47,12 +41,29 @@ export default function Questions() {
         }
     }
 
+    function displayCurrentResults(isDisplayingResults) {
+        if (isDisplayingResults)
+            return (
+                <div>
+                    <div className="transparent-screen" />
+                    <CurrentResults />
+                </div>
+            );
+    }
+
     if (context.question > 4) return <div>RESULTS</div>;
     return (
         <div className="questions">
-            <HeaderTab />
-            {displayQuestion(context.question)}
-            <FooterTab showButtons={context.question != 1} />
+            <div
+                className={`questions-bkg + ${
+                    context.isDisplayingResults ? "blurred" : ""
+                }`}
+            >
+                <HeaderTab />
+                {displayQuestion(context.question)}
+                <FooterTab showButtons={context.question != 1} />
+            </div>
+            {displayCurrentResults(context.isDisplayingResults)}
         </div>
     );
 }

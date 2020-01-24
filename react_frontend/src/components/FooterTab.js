@@ -5,12 +5,11 @@ import { QuestionContext } from "../QuestionContext";
 export default props => {
     const context = useContext(QuestionContext);
 
-    const [isDisplayingResults, setDispResults] = useState(false);
     const [isGoingNext, setNext] = useState(false);
 
     function disp_results(event) {
         event.preventDefault();
-        // Display results function
+        context.setDispResults(true);
     }
 
     function next(event) {

@@ -7,7 +7,6 @@ import { ThemeProvider, Link, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
-import Q1 from "./questions/Q1";
 
 const theme = createMuiTheme({
     shadows: ["none"],
