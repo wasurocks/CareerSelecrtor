@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const QuestionContext = React.createContext();
 
 const QuestionProvider = props => {
-    const [question, setQuestion] = useState(1);//SET TO 1
+    const [question, setQuestion] = useState(2);//SET TO 1
     const [searchParams, setSearchParams] = useState({
         nationality: null,
         type: null,
@@ -13,7 +13,6 @@ const QuestionProvider = props => {
     const [submitted, setSubmitted] = useState(false);
 
     function setParam(key, value) {
-        alert(value);
         let toSet = {...searchParams};
         toSet[key] = value;
         setSearchParams(toSet);
