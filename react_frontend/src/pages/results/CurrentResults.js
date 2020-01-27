@@ -112,6 +112,7 @@ export default () => {
                 </svg>
             </div>
             <div className="items">{displayItems()}</div>
+            <div className="bottom-tab"/>
         </div>
     );
 };
