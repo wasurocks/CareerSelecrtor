@@ -14,7 +14,7 @@ export default props => {
 
     function next(event) {
         event.preventDefault();
-        setNext(true);
+        if(context.isQuestionAnswered()) setNext(true);
     }
 
     if (isGoingNext) {
@@ -31,9 +31,9 @@ export default props => {
                 Display Results...
             </div>
             <div
-                className="next"
+                className={`next ${context.isQuestionAnswered()?"enabled":"disabled"}`}
                 onClick={next}
-                style={{ visibility: props.showButtons ? "visible" : "hidden" }}
+                style={{ visibility: props.showButtons ? "visible" : "hidden"  }}
             >
                 Next
             </div>

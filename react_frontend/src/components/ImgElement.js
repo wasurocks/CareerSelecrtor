@@ -3,7 +3,7 @@ import "../styles/ImgElement.css";
 
 export default props => {
     return (
-        <div className="img-element">
+        <div className={`img-element ${props.viewAllMode?"item-view-all":""}`}>
             <img src={props.img} />
             <div className="info">
                 <div className="name">{props.name}</div>

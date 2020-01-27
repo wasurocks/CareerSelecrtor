@@ -6,6 +6,7 @@ import HeaderTab from "../../components/HeaderTab";
 import { QuestionContext } from "../../QuestionContext";
 import FooterTab from "../../components/FooterTab";
 import CurrentResults from "../results/CurrentResults";
+import FinalResults from "../results/FinalResults";
 
 export default function Questions() {
     const context = useContext(QuestionContext);
@@ -38,6 +39,10 @@ export default function Questions() {
                         values={["yes", "no"]}
                     />
                 );
+            default:
+                return (
+                    <FinalResults/>
+                );
         }
     }
 
@@ -45,13 +50,13 @@ export default function Questions() {
         if (isDisplayingResults)
             return (
                 <div>
+                    {/* Transparent screen helps to prevent user-clicks */}
                     <div className="transparent-screen" />
                     <CurrentResults />
                 </div>
             );
     }
 
-    if (context.question > 4) return <div>RESULTS</div>;
     return (
         <div className="questions">
             <div
@@ -61,7 +66,7 @@ export default function Questions() {
             >
                 <HeaderTab />
                 {displayQuestion(context.question)}
-                <FooterTab showButtons={context.question != 1} />
+                <FooterTab showButtons={context.question != 1 && context.question < 5} />
             </div>
             {displayCurrentResults(context.isDisplayingResults)}
         </div>

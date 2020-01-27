@@ -42,6 +42,19 @@ const QuestionProvider = props => {
         setSearchParams(toSet);
     }
 
+    function isQuestionAnswered() {
+        switch (question) {
+            case 2:
+                return searchParams["type"] != null;
+            case 3:
+                return searchParams["spicy"] != null;
+            case 4:
+                return searchParams["veg"] != null;
+            default:
+                return false;
+        }
+    }
+
     function nextQuestion() {
         if (question < 5) setQuestion(question + 1);
     }
@@ -64,7 +77,8 @@ const QuestionProvider = props => {
                 isDisplayingResults,
                 setDispResults,
                 nextQuestion,
-                previousQuestion
+                previousQuestion,
+                isQuestionAnswered
             }}
         >
             {props.children}

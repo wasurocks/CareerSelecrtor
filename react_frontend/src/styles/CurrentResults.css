@@ -5,6 +5,7 @@
     border-radius: 5px;
     display: grid;
     grid-template-rows: 110fr 690fr 40fr;
+    transition: all .3s ease;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -27,7 +28,7 @@
 
 .current-results .view-all > span {
     position: absolute;
-    left: 5%;
+    left: 40px;
     cursor: pointer;
 }
 

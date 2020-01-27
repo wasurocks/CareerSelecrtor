@@ -9,8 +9,8 @@
 .backtab .back {
     display: flex;
     grid-column: 2;
-    justify-content: center;
-    align-items: center;
+    justify-self: center;
+    align-self: center;
     font-family: "PT Sans Caption", sans-serif;
     font-size: 1em;
     color: #006CFF;
