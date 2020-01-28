@@ -1,27 +1,25 @@
-.q1 {
-    overflow: hidden;
+.qselection {
     background-color: #F5F5F5;
     grid-row: 2;
     display: grid;
-    grid-template-rows: 200fr 460fr 100fr;
-    grid-template-columns: 150fr 1620fr 150fr;
+    height: 100%;
+    width: 100%;
+    grid-template-rows: 100fr 100fr 50fr 450fr 60fr;
+    grid-template-columns: 746fr 429fr 746fr;
 }
 
-.q1 .title {
+.qselection .title {
     text-align: center;
     align-self: center;
     justify-self: center;
     font-family: "PT Sans Caption", sans-serif;
     font-size: 2em;
     color: #707070;
-    grid-row: 1;
+    grid-row: 2/4;
     grid-column: 2;
 }
 
-.q1 .boxes {
-    grid-row: 2;
+.radiogroup {
+    grid-row: 4;
     grid-column: 2;
-    display: grid;
-    grid-template-columns: repeat(4, 360fr);
-    column-gap: 4.167%;
 }

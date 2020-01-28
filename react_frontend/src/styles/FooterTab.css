@@ -1,0 +1,47 @@
+.footertab {
+    overflow: hidden;
+    box-shadow: 0px -1px 4px 1px gainsboro;
+    display: grid;
+    grid-row: 3;
+    grid-template-columns: 35fr 200fr 1365fr 245fr 35fr; 
+}
+
+.footertab .disp-results {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+    color: #006CFF;
+}
+
+.footertab .disp-results:hover {
+    justify-self: center;
+    align-self: center;
+    cursor: pointer;
+    color: rgb(46, 110, 199);
+}
+
+.footertab .next {
+    display: flex;
+    grid-column: 4;
+    margin: 8%;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1.2em;
+    color: rgb(255, 255, 255);
+    background-color: #49d290;
+}
+
+.footertab .next.enabled:hover {
+    cursor: pointer;
+    background-color: #72ecac;
+}
+
+.footertab .next.disabled {
+    background-color: rgba(185, 187, 192, 0.692);
+}

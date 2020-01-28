@@ -1,0 +1,41 @@
+.group {
+    display: grid;
+    grid-template-rows: repeat(5, 81fr); /* Max 5 questions */
+    row-gap: 20px;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.inputshit {
+    display: none;
+}
+
+.radiobtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    transition: border 0.1s ease;
+    text-transform: capitalize;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1.4em;
+    color: #707070; 
+}
+
+.radiobtn.selected {
+    box-sizing: border-box;
+    border: 2.5px solid #49E198;
+    color: #4e4e4e; 
+}
+
+.radiobtn:hover {
+    cursor: pointer;
+}
+
+
+

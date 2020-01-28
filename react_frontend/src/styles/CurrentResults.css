@@ -1,0 +1,59 @@
+.current-results {
+    position: absolute;
+    background-color: white;
+    box-shadow: 1px 1px 10px 3px gainsboro;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 110fr 690fr 40fr;
+    transition: all .3s ease;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 40%;
+    height: 75%;
+    top: 18%;
+    z-index: 2;
+}
+
+.current-results .view-all {
+    grid-row: 1;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 1em;
+    color: #006cff;
+    border-bottom: solid 1px rgb(199, 202, 206);
+    display: flex;
+    align-items: center;
+}
+
+.current-results .view-all > span {
+    position: absolute;
+    left: 40px;
+    cursor: pointer;
+}
+
+.current-results .view-all > span:hover {
+    color: rgb(46, 110, 199);
+}
+
+.current-results .view-all > svg {
+    position: absolute;
+    right: 40px;
+    cursor: pointer;
+}
+
+.current-results .items {
+    overflow-y: auto;
+    grid-row: 2;
+    max-width: 100%;
+    max-height: 100%;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 160px);
+}
+
+.current-results .bottom-tab {
+    z-index: 2;
+    grid-row: 3;
+    border-top: solid 1px rgb(199, 202, 206);
+    box-shadow: 0 -5px 15px -5px whitesmoke;
+}
