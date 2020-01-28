@@ -17,7 +17,7 @@ const s3 = new AWS.S3({
 });
 
 const refilter = obj => {
-    return Object.keys(obj).filter(key => obj[key] !== null).map(key => {
+    Object.keys(obj).filter(key => obj[key] !== null).map(key => {
       let emptyObj = {};
       emptyObj[`prop.${key}`] = obj[key];
       return emptyObj;

@@ -19,5 +19,6 @@ const FoodSchema = new Schema({
     }
 });
 
-module.exports = Food = mongoose.model("food", FoodSchema, "food"); // IMPORTANT additional parameter 
+module.exports = Food = mongoose.model("food", FoodSchema, "food"); 
+// IMPORTANT additional parameter 
 // Enables access to existing database

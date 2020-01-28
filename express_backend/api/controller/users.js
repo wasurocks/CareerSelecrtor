@@ -1,15 +1,20 @@
 const express = require("express");
-const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
 
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 
 // Load User model
-const User = require("../models/User");
+
+
+function register(req, res) {
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) return res.status(400).json(errors);
+
+}
 
 // @route POST api/users/register
 // @desc Register user
@@ -31,17 +36,7 @@ router.post("/register", (req, res) => {
                 password: req.body.password
             });
 
-            // Hash password before saving in database
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.password = hash;
-                    newUser
-                        .save()
-                        .then(user => res.status(201).json(user))
-                        .catch(err => console.log(err));
-                });
-            });
+            // HASH
         }
     });
 });
@@ -50,7 +45,6 @@ router.post("/register", (req, res) => {
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
-    console.log(req.body);
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
     // Check validation
