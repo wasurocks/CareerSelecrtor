@@ -38,7 +38,7 @@
 
 .current-results .view-all > svg {
     position: absolute;
-    right: 5%;
+    right: 40px;
     cursor: pointer;
 }
 

@@ -22,8 +22,13 @@ const QuestionProvider = props => {
                 break;
             case 3:
                 dict["spicy"] = null;
+                dict["type"] = null;
                 break;
             case 4:
+                dict["veg"] = null;
+                dict["spicy"] = null;
+                break;
+            case 5:
                 dict["veg"] = null;
                 break;
         }
@@ -74,6 +79,7 @@ const QuestionProvider = props => {
                 setParam,
                 setSubmitted,
                 clearAll,
+                clearPrevious,
                 isDisplayingResults,
                 setDispResults,
                 nextQuestion,

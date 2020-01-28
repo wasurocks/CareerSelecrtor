@@ -13,6 +13,7 @@ export default function BackTab() {
 
     if (isGoingBack) {
         setBack(false);
+        context.clearPrevious();
         context.previousQuestion();
     }
     return (

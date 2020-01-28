@@ -2,6 +2,8 @@
     background-color: #F5F5F5;
     grid-row: 2;
     display: grid;
+    height: 100%;
+    width: 100%;
     grid-template-rows: 100fr 100fr 50fr 450fr 60fr;
     grid-template-columns: 746fr 429fr 746fr;
 }

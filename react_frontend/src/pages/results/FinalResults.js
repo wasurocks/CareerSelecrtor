@@ -71,6 +71,7 @@ export default () => {
     return (
         <div className="final-results">
             <BackTab />
+            <div className="title">Results</div>
             <div className="items">{displayItems()}</div>
         </div>
     );
