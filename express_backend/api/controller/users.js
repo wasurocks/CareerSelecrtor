@@ -1,94 +1,134 @@
-const express = require("express");
+const Validator = require("validator");
+const isEmpty = require("is-empty");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const {findUserByEmail, createNewUser, deleteUserByEmail} = require("../model/functions");
 
-// Load input validation
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
+// Hash function to hash password
+async function hashPassword(password) {
+    // Set rounds of salting
+    const saltRounds = 10;
 
-// Load User model
-
-
-function register(req, res) {
-    const { errors, isValid } = validateRegisterInput(req.body);
-
-    if (!isValid) return res.status(400).json(errors);
-
-}
-
-// @route POST api/users/register
-// @desc Register user
-// @access Public
-router.post("/register", (req, res) => {
-    // Form validation
-    const { errors, isValid } = validateRegisterInput(req.body);
-
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
-    User.findOne({ email: req.body.email }).then(user => {
-        if (user) {
-            return res.status(400).json({ email: "User already exists" });
-        } else {
-            const newUser = new User({
-                email: req.body.email,
-                password: req.body.password
-            });
-
-            // HASH
-        }
-    });
-});
-
-// @route POST api/users/login
-// @desc Login user and return JWT token
-// @access Public
-router.post("/login", (req, res) => {
-    // Form validation
-    const { errors, isValid } = validateLoginInput(req.body);
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
-    const email = req.body.email;
-    const password = req.body.password;
-    // Find user by email
-    User.findOne({ email }).then(user => {
-        // Check if user exists
-        if (!user) {
-            return res.status(404).json({ emailnotfound: "User not found" });
-        }
-        // Check password
-        bcrypt.compare(password, user.password).then(isMatch => {
-            if (isMatch) {
-                // User matched
-                // Create JWT Payload
-                const payload = {
-                    id: user.id,
-                    email: user.email
-                };
-                // Sign token
-                jwt.sign(
-                    payload,
-                    keys.secretOrKey,
-                    {
-                        expiresIn: 31556926 // 1 year in seconds
-                    },
-                    (err, token) => {
-                        res.status(201).json({
-                            success: true,
-                            token: "Bearer " + token
-                        });
-                    }
-                );
-            } else {
-                return res
-                    .status(400)
-                    .json({ passwordincorrect: "Password incorrect" });
-            }
+    const hashedPassword = await new Promise((resolve, reject) => {
+        bcrypt.hash(password, saltRounds, function(err, hash) {
+            if (err) reject(err);
+            resolve(hash);
         });
     });
-});
 
-module.exports = router;
+    return hashedPassword;
+}
+
+// Compares password with its hash
+function comparePassword(password, password_hash) {
+    return bcrypt.compare(password, password_hash);
+}
+
+function signAndGetToken(payload) {
+    // Sign token
+    return jwt.sign(payload, process.env.SECRETORKEY, {
+        expiresIn: 31556926 // 1 year in seconds
+    });
+}
+
+function validateLoginInput(data) {
+    // Set errors to empty object
+    let errors = {};
+
+    // Convert empty fields to an empty string to use validator functions
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
+
+    // Email checks
+    if (Validator.isEmpty(data.email)) errors.email = "Email field is required";
+    else if (!Validator.isEmail(data.email)) errors.email = "Email is invalid";
+
+    // Password checks
+    if (Validator.isEmpty(data.password))
+        errors.password = "Password field is required";
+
+    // Return object of errors and validity-check boolean
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    };
+}
+
+function validateRegisterInput(data) {
+    // Set errors to empty object
+    let errors = {};
+
+    // Convert empty fields to an empty string to use validator functions
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
+    data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+
+    // Email checks
+    if (Validator.isEmpty(data.email)) errors.email = "Email field is required";
+    else if (!Validator.isEmail(data.email)) errors.email = "Email is invalid";
+
+    // Password checks
+    if (Validator.isEmpty(data.password))
+        errors.password = "Password field is required";
+    if (Validator.isEmpty(data.password2))
+        errors.password2 = "Confirm password field is required";
+
+    if (!Validator.isLength(data.password, { min: 6, max: 12 }))
+        errors.password = "Password must be between 6 to 12 characters";
+
+    if (!Validator.equals(data.password, data.password2))
+        errors.password2 = "Passwords must match";
+
+    // Return object of errors and validity-check boolean
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    };
+}
+
+async function login(req, res) {
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    // Check validation
+    if (!isValid) return res.status(400).json(errors);
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const user = await findUserByEmail(email);
+
+    if (!user) return res.status(404).json({ emailnotfound: "User not found" });
+    if (await comparePassword(password, user.password)) {
+        const payload = {
+            id: user.id,
+            email: user.email
+        };
+        const token = await signAndGetToken(payload);
+        res.status(201).json({
+            success: true,
+            token: "Bearer " + token
+        });
+    } else
+        return res
+            .status(400)
+            .json({ passwordincorrect: "Password incorrect" });
+}
+
+async function register(req, res) {
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    // Check validation
+    if (!isValid) return res.status(400).json(errors);
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (await findUserByEmail(email))
+        return res.status(400).json({ email: "User already exists" });
+    else createNewUser(email, hashPassword(password));
+}
+
+module.exports = {
+    login,
+    register
+};

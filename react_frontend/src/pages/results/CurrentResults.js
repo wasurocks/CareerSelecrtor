@@ -35,13 +35,13 @@ export default () => {
             )
             // In case of successful login
             .then(res => {
-                if (res.status == 200) {
+                if (res.status === 200) {
                     if (Object.entries(res.data).length !== 0) {
                         console.log("Data found:");
                         setResults(res.data);
                     } else console.log("No data found");
                 }
-                if (res.status == 404) {
+                if (res.status === 404) {
                     console.log("Server error");
                 }
             })
@@ -51,7 +51,7 @@ export default () => {
                     console.log(err);
                 }
             });
-    }, [viewAllResults]);
+    }, [context.searchParams, loginContext, viewAllResults]);
 
     const displayItems = () => {
         let toRender = [];

@@ -8,25 +8,22 @@ import ErrorPage from "./pages/ErrorPage.js";
 import Questions from "./pages/questions/Questions.js";
 import { QuestionProvider } from "./QuestionContext.js";
 
-class App extends React.Component {
-    render() {
+export default () => {
+    return (
         // If user is logged in, route all to success page
-        return (
-            <Switch>
-                <Route exact path={["/", "/login"]} component={LoginPage} />
-                <Route exact path="/register" component={RegisterPage} />
-                <ProtectedRoute exact path="/success">
-                    <SuccessPage />
-                </ProtectedRoute>
-                <ProtectedRoute exact path="/questions">
-                    <QuestionProvider>
-                        <Questions />
-                    </QuestionProvider>
-                </ProtectedRoute>
-                <Route component={ErrorPage} />
-            </Switch>
-        );
-    }
-}
+        <Switch>
+            <Route exact path={["/", "/login"]} component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <ProtectedRoute exact path="/success">
+                <SuccessPage />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/questions">
+                <QuestionProvider>
+                    <Questions />
+                </QuestionProvider>
+            </ProtectedRoute>
+            <Route component={ErrorPage} />
+        </Switch>
+    );
+};
 
-export default App;
