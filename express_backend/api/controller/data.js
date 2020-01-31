@@ -40,14 +40,17 @@ async function getPhotoUrl(name) {
 async function getResults(req, res, showAll = false) {
     let foods = {};
 
-    if (!showAll)
-        foods = await findItemsByQuery({
-            $and: refilter(req.body.searchparams)
-        }).catch(err => console.error(err));
-    else foods = await findItemsByQuery({}).catch(err => console.error(err));
+    // Checks if only current results are required and if searchparams is supplied
+    if (!showAll && req.body.searchparams) foods = await findItemsByQuery({
+        $and: refilter(req.body.searchparams)
+    }).catch(err => console.error(err));
+    else if (showAll) foods = await findItemsByQuery({}).catch(err => console.error(err));
+    else return res.sendStatus(400);
 
+    // If there are no returned items
     if (!foods) return res.sendStatus(404);
 
+    // Stores all returned items and responds with a json file
     const validitems = {};
     foods.map(food => {
         validitems[food.name] = {
@@ -55,7 +58,6 @@ async function getResults(req, res, showAll = false) {
             desc: food.desc,
             img_url: getPhotoUrl(food.name)
         };
-        if (showAll) validitems[food.name].prop = food.prop;
     });
 
     return res.status(200).json(validitems);

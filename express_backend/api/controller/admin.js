@@ -43,18 +43,28 @@ async function removePhotoFromBucket(name) {
     await s3.deleteObject(params).promise().catch(err => console.error(err));
 }
 
-/*
-    Adds item:
-    - photo => stored in bucket
-    - data => stored in MongoDB collection
-*/
-function addItem(name, img_buffer) {
-    addPhotoToBucket(name, img_buffer);
+// Adds item:
+// - photo => stored in bucket
+// - data => stored in MongoDB collection
+function addItem(req, res) {
+    if(req.body.name && req.file) {
+        addPhotoToBucket(req.body.name, req.file.buffer);
+        return res.sendStatus(201);
+    } 
+    
+    // If request parameters invalid
+    return res.sendStatus(400);
 }
 
 // Removes an item from bucket and collection
-function removeItem(name) {
-    removePhotoFromBucket(name);
+function removeItem(req, res) {
+    if(req.body.name) {
+        removePhotoFromBucket(req.body.name);
+        return res.sendStatus(200);
+    }
+
+    // If request parameters invalid
+    return res.sendStatus(400);
 }
 
 // Creates a new user

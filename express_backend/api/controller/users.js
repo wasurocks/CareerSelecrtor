@@ -2,7 +2,11 @@ const Validator = require("validator");
 const isEmpty = require("is-empty");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {findUserByEmail, createNewUser, deleteUserByEmail} = require("../model/functions");
+const {
+    findUserByEmail,
+    createNewUser,
+    deleteUserByEmail
+} = require("../model/functions");
 
 // Hash function to hash password
 async function hashPassword(password) {
@@ -95,23 +99,24 @@ async function login(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
+    // Checks existing users
     const user = await findUserByEmail(email);
 
-    if (!user) return res.status(404).json({ emailnotfound: "User not found" });
-    if (await comparePassword(password, user.password)) {
+    // If user exists and password matches, return a token
+    if (await comparePassword(password, user.password) && user) {
         const payload = {
             id: user.id,
             email: user.email
         };
         const token = await signAndGetToken(payload);
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             token: "Bearer " + token
         });
-    } else
-        return res
-            .status(400)
-            .json({ passwordincorrect: "Password incorrect" });
+    }
+
+    // If user doesn't exist or password doesn't match, do nothing
+    return res.sendStatus(404);
 }
 
 async function register(req, res) {
@@ -123,9 +128,13 @@ async function register(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
+    // Checks existing users
     if (await findUserByEmail(email))
         return res.status(400).json({ email: "User already exists" });
-    else createNewUser(email, hashPassword(password));
+
+    // If user doesn't exist, create a new user
+    createNewUser(email, hashPassword(password));
+    return res.sendStatus(201);
 }
 
 module.exports = {
