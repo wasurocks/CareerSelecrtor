@@ -15,9 +15,6 @@ app.use(cors());
 // Make a connection to MongoDB server
 require("./model/database");
 
-// Passport config
-require("./controller/auth")(app);
-
 // Pass route handling to router
 const router = require("./controller/router");
 app.use("/", router);

@@ -18,7 +18,7 @@ async function hashPassword(password) {
             if (err) reject(err);
             resolve(hash);
         });
-    });
+    }).catch(err => console.error(err));
 
     return hashedPassword;
 }
@@ -28,13 +28,15 @@ function comparePassword(password, password_hash) {
     return bcrypt.compare(password, password_hash);
 }
 
-function signAndGetToken(payload) {
-    // Sign token
-    return jwt.sign(payload, process.env.SECRETORKEY, {
-        expiresIn: 31556926 // 1 year in seconds
+// Sign JWT token
+function generateAuthToken(payload) {
+    const token = jwt.sign(payload, process.env.SECRETORKEY, {
+        expiresIn: 31556926
     });
+    return token;
 }
 
+// Validates the login data
 function validateLoginInput(data) {
     // Set errors to empty object
     let errors = {};
@@ -58,6 +60,7 @@ function validateLoginInput(data) {
     };
 }
 
+// Validates the registration data
 function validateRegisterInput(data) {
     // Set errors to empty object
     let errors = {};
@@ -90,10 +93,11 @@ function validateRegisterInput(data) {
     };
 }
 
+// Middleware handling login
 async function login(req, res) {
     const { errors, isValid } = validateLoginInput(req.body);
 
-    // Check validation
+    // Check validation for fields
     if (!isValid) return res.status(400).json(errors);
 
     const email = req.body.email;
@@ -103,12 +107,13 @@ async function login(req, res) {
     const user = await findUserByEmail(email);
 
     // If user exists and password matches, return a token
-    if (await comparePassword(password, user.password) && user) {
+    if (comparePassword(password, user.password) && user) {
         const payload = {
-            id: user.id,
-            email: user.email
+            id: user._id,
+            email: user.email,
+            isAdmin: user.isAdmin
         };
-        const token = await signAndGetToken(payload);
+        const token = generateAuthToken(payload);
         return res.status(201).json({
             success: true,
             token: "Bearer " + token
@@ -119,10 +124,11 @@ async function login(req, res) {
     return res.sendStatus(404);
 }
 
+// Handles registering
 async function register(req, res) {
     const { errors, isValid } = validateRegisterInput(req.body);
 
-    // Check validation
+    // Check validation for fields
     if (!isValid) return res.status(400).json(errors);
 
     const email = req.body.email;
@@ -133,7 +139,8 @@ async function register(req, res) {
         return res.status(400).json({ email: "User already exists" });
 
     // If user doesn't exist, create a new user
-    createNewUser(email, hashPassword(password));
+    createNewUser(email, await hashPassword(password));
+
     return res.sendStatus(201);
 }
 

@@ -23,16 +23,13 @@ function refilter(obj) {
 }
 
 // Returns the temporary URL of a given filename
-async function getPhotoUrl(name) {
+function getPhotoUrl(name) {
     const params = {
         Bucket: "foodselector",
         Key: `photos/${name}.jpg`,
         Expires: 60
     };
-    await s3
-        .getSignedUrl("getObject", params)
-        .promise()
-        .catch(err => console.error(err));
+    return s3.getSignedUrl("getObject", params);
 }
 
 // Obtains items from a search operation
@@ -41,10 +38,12 @@ async function getResults(req, res, showAll = false) {
     let foods = {};
 
     // Checks if only current results are required and if searchparams is supplied
-    if (!showAll && req.body.searchparams) foods = await findItemsByQuery({
-        $and: refilter(req.body.searchparams)
-    }).catch(err => console.error(err));
-    else if (showAll) foods = await findItemsByQuery({}).catch(err => console.error(err));
+    if (!showAll && req.body.searchparams)
+        foods = await findItemsByQuery({
+            $and: refilter(req.body.searchparams)
+        }).catch(err => console.error(err));
+    else if (showAll)
+        foods = await findItemsByQuery({}).catch(err => console.error(err));
     else return res.sendStatus(400);
 
     // If there are no returned items

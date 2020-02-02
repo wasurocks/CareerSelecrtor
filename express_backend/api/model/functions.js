@@ -2,6 +2,11 @@
 const User = require("./schema/user");
 const Food = require("./schema/food");
 
+// Finds user by ID
+function findUserByID(_id) {
+    return User.findOne({ _id });
+}
+
 // Finds user by email
 function findUserByEmail(email) {
     return User.findOne({ email });
@@ -9,7 +14,7 @@ function findUserByEmail(email) {
 
 // Creates new user with email and password hash
 function createNewUser(email, password_hash) {
-    User.insert({
+    User.create({
         email,
         password: password_hash
     });
@@ -41,6 +46,7 @@ function deleteItemByName(name) {
 }
 
 module.exports = {
+    findUserByID,
     findUserByEmail,
     createNewUser,
     deleteUserByEmail,
