@@ -31,6 +31,8 @@ const QuestionProvider = props => {
             case 5:
                 dict["veg"] = null;
                 break;
+            default:
+                break;
         }
         setSearchParams(dict);
     }

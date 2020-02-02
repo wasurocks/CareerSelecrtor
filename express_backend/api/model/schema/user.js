@@ -15,3 +15,5 @@ const UserSchema = new Schema({
 });
 
 module.exports = User = mongoose.model("users", UserSchema, "users");
+// IMPORTANT additional parameter 
+// Enables access to existing database
