@@ -9,14 +9,14 @@ There are different routes provided, with different levels of accessibility depe
 
 The following routes are publicly available
 
-### `POST /api/login`
+#### `POST /api/login`
  - Login for existing users 
  - Content-type = application/json 
  - Parameters:
 	 - **email**: email-address
 	 - **password**: password
 
-### `POST /api/register`
+#### `POST /api/register`
  - Registration for new users
  - Content-type = application/json 
  - Parameters:
@@ -24,7 +24,7 @@ The following routes are publicly available
 	 - **password**: password
 	 - **password2**: confirm-password
 
-## Authenticated Routes
+### Authenticated Routes
 
 The following routes are restricted to existing users
 
@@ -44,7 +44,7 @@ The following routes are restricted to existing users
 
 The following routes are restricted to site administrators
 
-### `PUT /api/admin/upload`
+#### `PUT /api/admin/upload`
  - Uploads a single new item
  - Content-type = application/x-www-form-urlencoded
   - Parameters:
@@ -54,26 +54,26 @@ The following routes are restricted to site administrators
 	 - **desc**: description
 	 - **prop**: *object* containing properties of an item
 
-### `DELETE /api/admin/delete`
+#### `DELETE /api/admin/delete`
  - Deletes a single item
  - Content-type = application/json
   - Parameters:
 	 - **name**: item name for reference
 
-### `PUT /api/admin/create-user`
+#### `PUT /api/admin/create-user`
  - Creates a new user
  - Content-type = application/json
   - Parameters:
 	 - **email**: email-address
 	 - **password**: password
 
-### `DELETE /api/admin/delete-user`
+#### `DELETE /api/admin/delete-user`
  - Removes a user
  - Content-type = application/json
   - Parameters:
 	 - **email**: email-address
 
-### `GET /api/admin/find-user`
+#### `GET /api/admin/find-user`
  - Finds a user
  - Content-type = application/json
   - Parameters:
