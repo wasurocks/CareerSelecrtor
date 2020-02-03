@@ -29,7 +29,7 @@ function authenticateToken(req, res, next) {
     } catch (err) {
         // Invalid information
         console.log(err);
-        return res.sendStatus(400);
+        return res.sendStatus(401);
     }
 }
 

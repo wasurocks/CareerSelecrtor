@@ -13,16 +13,21 @@ function findUserByEmail(email) {
 }
 
 // Creates new user with email and password hash
-function createNewUser(email, password_hash) {
-    User.create({
+async function createNewUser(email, password_hash) {
+    await User.create({
         email,
         password: password_hash
     });
 }
 
 // Deletes user
-function deleteUserByEmail(email) {
-    User.deleteOne({ email });
+async function deleteUserByEmail(email) {
+    await User.deleteOne({ email });
+}
+
+// Checks if user exists
+function checkUserExistenceByQuery(query) {
+    return User.countDocuments(query).limit(1);
 }
 
 // Finds data item(s) by query
@@ -30,9 +35,14 @@ function findItemsByQuery(query) {
     return Food.find(query);
 }
 
+// Checks if item exists
+function checkItemExistenceByQuery(query) {
+    return Food.countDocuments(query).limit(1);
+}
+
 // Adds new data item
-function insertItem(name, disp_name, desc, prop) {
-    Food.insertOne({
+async function insertItem(name, disp_name, desc, prop) {
+    await Food.create({
         name,
         disp_name,
         desc,
@@ -41,8 +51,8 @@ function insertItem(name, disp_name, desc, prop) {
 }
 
 // Removes existing data item
-function deleteItemByName(name) {
-    Food.deleteOne({ name });
+async function deleteItemByName(name) {
+    await Food.deleteOne({ name });
 }
 
 module.exports = {
@@ -52,5 +62,7 @@ module.exports = {
     deleteUserByEmail,
     findItemsByQuery,
     insertItem,
-    deleteItemByName
+    deleteItemByName,
+    checkItemExistenceByQuery,
+    checkUserExistenceByQuery
 };
