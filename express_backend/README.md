@@ -73,7 +73,7 @@ The following routes are restricted to site administrators
   - Parameters:
 	 - **email**: email-address
 
-#### `GET /api/admin/find-user`
+#### `POST /api/admin/find-user`
  - Finds a user
  - Content-type = application/json
   - Parameters:
