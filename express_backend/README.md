@@ -1,76 +1,80 @@
-## Backend API
+# Backend API
 
-The following routes direct users to different API features:
+The backend of FoodSelector has been written using ExpressJS and NodeJS. It uses MongoDB as a database and DigitalOcean Spaces as an image store.
 
-# Public routes
- 
-### `/api/login`
+There are different routes provided, with different levels of accessibility depending on the user's authorization.
 
-@ POST /api/login
-@ content-type = application/json
-@ Login for existing users
 
-@ parameters
-    email: email address
-    password: password
+## Public Routes
 
-### `/api/register`
+The following routes are publicly available
 
-@ POST /api/register
-@ content-type = application/json
-@ Registration for new users
+### `POST /api/login`
+ - Login for existing users 
+ - Content-type = application/json 
+ - Parameters:
+	 - **email**: email-address
+	 - **password**: password
 
-@ parameters
-    email: email address
-    password: password
-    password2: confirm password
+### `POST /api/register`
+ - Registration for new users
+ - Content-type = application/json 
+ - Parameters:
+	 - **email**: email-address
+	 - **password**: password
+	 - **password2**: confirm-password
 
-### `/data/current-results`
+## Authenticated Routes
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The following routes are restricted to existing users
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### `POST /api/data/current-results`
+ - Searches for items from specified parameters
+ - Content-type = application/json 
+ - Parameters:
+	 - **searchparams**: *object* containing parameters to search for
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `GET /api/data/view-all`
+ - Displays all items
+ - Content-type = application/json
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Administrator Routes
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The following routes are restricted to site administrators
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `PUT /api/admin/upload`
+ - Uploads a single new item
+ - Content-type = application/x-www-form-urlencoded
+  - Parameters:
+	 - **image**: *.jpg file* containing image to upload
+	 - **name**: item name for reference
+	 - **disp_name**: display name
+	 - **desc**: description
+	 - **prop**: *object* containing properties of an item
 
-## Learn More
+### `DELETE /api/admin/delete`
+ - Deletes a single item
+ - Content-type = application/json
+  - Parameters:
+	 - **name**: item name for reference
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `PUT /api/admin/create-user`
+ - Creates a new user
+ - Content-type = application/json
+  - Parameters:
+	 - **email**: email-address
+	 - **password**: password
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `DELETE /api/admin/delete-user`
+ - Removes a user
+ - Content-type = application/json
+  - Parameters:
+	 - **email**: email-address
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### `GET /api/admin/find-user`
+ - Finds a user
+ - Content-type = application/json
+  - Parameters:
+	 - **email**: email-address

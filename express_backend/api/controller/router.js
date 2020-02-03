@@ -34,7 +34,7 @@ router.post("/register", (req, res) => register(req, res));
 router.use([authenticateToken, checkUserStatus]);
 
 /*  
-    @ POST /api/admin/current-results
+    @ POST /api/data/current-results
     @ content-type = application/json
     @ Searches for items from specified parameters
 
