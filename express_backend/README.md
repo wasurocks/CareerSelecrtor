@@ -28,14 +28,14 @@ The following routes are publicly available
 
 The following routes are restricted to existing users
 
-### `POST /api/data/current-results`
+#### `POST /api/data/current-results`
  - Searches for items from specified parameters
  - Content-type = application/json 
  - Parameters:
 	 - **searchparams**: *object* containing parameters to search for
 
 
-### `GET /api/data/view-all`
+#### `GET /api/data/view-all`
  - Displays all items
  - Content-type = application/json
 
