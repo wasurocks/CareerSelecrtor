@@ -1,4 +1,4 @@
-# Backend API
+# Backend API (FoodSelector)
 
 The backend of FoodSelector has been written using ExpressJS and NodeJS. It uses MongoDB as a database and DigitalOcean Spaces as an image store.
 
