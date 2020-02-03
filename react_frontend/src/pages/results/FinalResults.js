@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import "../../styles/FinalResults.css";
 import axios from "axios";
-import { QuestionContext } from "../../QuestionContext";
-import { AuthContext } from "../../AuthContext";
+import { QuestionContext } from "../../contexts/QuestionContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import ImgElement from "../../components/ImgElement";
 import BackTab from "../../components/BackTab";
 
@@ -31,13 +31,13 @@ export default () => {
             )
             // In case of successful login
             .then(res => {
-                if (res.status == 200) {
+                if (res.status === 200) {
                     if (Object.entries(res.data).length !== 0) {
                         console.log("Data found:");
                         setResults(res.data);
                     } else console.log("No data found");
                 }
-                if (res.status == 404) {
+                if (res.status === 404) {
                     console.log("Server error");
                 }
             })
@@ -47,15 +47,14 @@ export default () => {
                     console.log(err);
                 }
             });
-    }, []);
+    }, [context.searchParams, loginContext]);
 
     const displayItems = () => {
-        let toRender = [];
         let items = { ...results };
         if (Object.entries(results).length !== 0)
-            Object.keys(items).map(key => {
+            return Object.keys(items).map(key => {
                 let food = items[key];
-                toRender.push(
+                return (
                     <ImgElement
                         img={food.img_url}
                         key={food.name}
@@ -65,7 +64,6 @@ export default () => {
                     />
                 );
             });
-        return toRender;
     };
 
     return (

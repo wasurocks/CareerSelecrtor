@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import SuccessPage from "./pages/SuccessPage.js";
-import { AuthContext } from "./AuthContext.js";
+import { AuthContext } from "./contexts/AuthContext.js";
 
 const ProtectedRoute = (props) => {
     const context = React.useContext(AuthContext);

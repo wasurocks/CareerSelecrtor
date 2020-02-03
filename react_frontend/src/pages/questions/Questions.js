@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Q1 from "./Q1";
 import QSelection from "./QSelection";
 import "../../styles/Questions.css";
 import HeaderTab from "../../components/HeaderTab";
-import { QuestionContext } from "../../QuestionContext";
+import { QuestionContext } from "../../contexts/QuestionContext";
 import FooterTab from "../../components/FooterTab";
 import CurrentResults from "../results/CurrentResults";
 import FinalResults from "../results/FinalResults";
@@ -34,7 +34,7 @@ export default function Questions() {
             case 4:
                 return (
                     <QSelection
-                        text="Are you vegetarian?"
+                        text="Should the dish be vegetarian?"
                         type="veg"
                         values={["yes", "no"]}
                     />
@@ -66,7 +66,7 @@ export default function Questions() {
             >
                 <HeaderTab />
                 {displayQuestion(context.question)}
-                <FooterTab showButtons={context.question != 1 && context.question < 5} />
+                <FooterTab showButtons={context.question !== 1 && context.question < 5} />
             </div>
             {displayCurrentResults(context.isDisplayingResults)}
         </div>

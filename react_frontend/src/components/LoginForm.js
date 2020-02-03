@@ -13,7 +13,7 @@ import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { ThemeProvider, TextField } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { AuthContext } from "../AuthContext.js";
+import { AuthContext } from "../contexts/AuthContext.js";
 
 const theme = createMuiTheme({
     shadows: ["none"],
@@ -50,7 +50,7 @@ export default class LoginForm extends React.Component {
 
     handleValidation = () => {
         let errors = {};
-        let testRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let testRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const { email, password } = this.state.fields;
         if (email === "") errors.email = "Email is required";
         if (!email.match(testRegex)) errors.email = "Email is invalid";
@@ -88,13 +88,13 @@ export default class LoginForm extends React.Component {
                 };
                 axios
                     .post(
-                        `http://localhost:8000/api/users/login`,
+                        `http://localhost:8000/api/login`,
                         this.state.fields,
                         config
                     )
                     // In case of successful login
                     .then(res => {
-                        if (res.status == 201) {
+                        if (res.status === 201) {
                             console.log("Success");
                             this.context.login(res.data.token);
                             this.setState({ isLoggedIn: true });

@@ -49,7 +49,7 @@ export default class RegisterForm extends React.Component {
 
     handleValidation = () => {
         let errors = {};
-        let testRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let testRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const { email, password, password2 } = this.state.fields;
         if (email === "") errors.email = "Email is required";
         if (!email.match(testRegex)) errors.email = "Email is invalid";
@@ -90,30 +90,19 @@ export default class RegisterForm extends React.Component {
                 };
                 axios
                     .post(
-                        `http://localhost:8000/api/users/register`,
+                        `http://localhost:8000/api/register`,
                         this.state.fields,
                         config
                     )
                     // In case of successful registration
                     .then(res => {
-                        if (res.status == 201) {
-                            console.log("Success");
-                            this.setState({ isRegistered: true });
-                        }
+                        if (res.status === 201) this.setState({ isRegistered: true });
                     })
                     // Catch errors
                     .catch(err => {
                         if (err) {
-                            if (
-                                err.response.data.email == "User already exists"
-                            ) {
-                                console.log("Account already exists");
-                                alert("Account already exists");
-                            } else {
-                                // Should never happen but just in case
-                                console.log("Invalid information");
-                                alert("Invalid information");
-                            }
+                            if (err.response.data.email) alert("Account already exists");
+                            else alert("Invalid information");
                             this.setState({ isSubmitting: false });
                         }
                     });

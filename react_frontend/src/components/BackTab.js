@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "../styles/BackTab.css";
-import { QuestionContext } from "../QuestionContext";
+import { QuestionContext } from "../contexts/QuestionContext";
 
 export default function BackTab() {
     const context = useContext(QuestionContext);

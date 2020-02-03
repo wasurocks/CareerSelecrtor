@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import logo from "../logo/foodicon.png";
 import "../styles/HeaderTab.css";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import { Redirect } from "react-router-dom";
-import { QuestionContext } from "../QuestionContext";
+import { QuestionContext } from "../contexts/QuestionContext";
 
 export default function HeaderTab() {
     const authContext = useContext(AuthContext);
@@ -33,7 +33,7 @@ export default function HeaderTab() {
                 <br />
                 Selector
             </div>
-            <img src={logo} className="mini-logo" />
+            <img src={logo} alt="mini-logo" className="mini-logo" />
             <div className="home" onClick={home}>
                 Home
             </div>

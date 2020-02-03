@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import "../../styles/CurrentResults.css";
 import "../../styles/ViewAllResults.css";
 import axios from "axios";
-import { QuestionContext } from "../../QuestionContext";
-import { AuthContext } from "../../AuthContext";
+import { QuestionContext } from "../../contexts/QuestionContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import ImgElement from "../../components/ImgElement";
 import CloseButton from "../../components/CloseButton";
 
@@ -23,43 +23,41 @@ export default () => {
                 "Content-Type": "application/json"
             }
         };
-        axios
-            .post(
-                `http://localhost:8000/api/data/${
-                    viewAllResults ? "view-all" : "current-results"
-                }`,
-                {
-                    searchparams: context.searchParams
-                },
-                config
-            )
-            // In case of successful login
-            .then(res => {
-                if (res.status === 200) {
-                    if (Object.entries(res.data).length !== 0) {
-                        console.log("Data found:");
+        if (viewAllResults) {
+            axios
+                .get("http://localhost:8000/api/data/view-all", config)
+                .then(res => {
+                    if (
+                        res.status === 200 &&
+                        Object.entries(res.data).length !== 0
+                    )
                         setResults(res.data);
-                    } else console.log("No data found");
-                }
-                if (res.status === 404) {
-                    console.log("Server error");
-                }
-            })
-            // Catch errors
-            .catch(err => {
-                if (err) {
-                    console.log(err);
-                }
-            });
+                })
+                .catch();
+        } else {
+            axios
+                .post(
+                    "http://localhost:8000/api/data/current-results",
+                    { searchparams: context.searchParams },
+                    config
+                )
+                .then(res => {
+                    if (
+                        res.status === 200 &&
+                        Object.entries(res.data).length !== 0
+                    )
+                        setResults(res.data);
+                })
+                .catch();
+        }
     }, [context.searchParams, loginContext, viewAllResults]);
 
     const displayItems = () => {
-        let toRender = [];
         let items = { ...results };
         if (Object.entries(results).length !== 0)
-            Object.keys(items).map(key => {
+            return Object.keys(items).map(key => {
                 let food = items[key];
-                toRender.push(
+                return (
                     <ImgElement
                         img={food.img_url}
                         key={food.name}
@@ -69,7 +67,6 @@ export default () => {
                     />
                 );
             });
-        return toRender;
     };
 
     const viewModeTrigger = event => {

@@ -5,7 +5,7 @@ import "../styles/Logo.css";
 export default function Logo() {
     return (
         <div className="logo">
-            <img src={logo} className="icon" />
+            <img src={logo} alt="logo" className="icon" />
             <div className="title">
                 <span className="text">FoodBuddy</span>
             </div>
