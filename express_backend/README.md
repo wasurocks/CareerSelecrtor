@@ -1,21 +1,31 @@
-## Route
+## Backend API
 
-In the project directory, you can run:
+The following routes direct users to different API features:
 
-### `npm start`
+# Public routes
+ 
+### `/api/login`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+@ POST /api/login
+@ content-type = application/json
+@ Login for existing users
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+@ parameters
+    email: email address
+    password: password
 
-### `npm test`
+### `/api/register`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+@ POST /api/register
+@ content-type = application/json
+@ Registration for new users
 
-### `npm run build`
+@ parameters
+    email: email address
+    password: password
+    password2: confirm password
+
+### `/data/current-results`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
