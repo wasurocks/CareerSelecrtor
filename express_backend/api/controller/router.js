@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { login, register } = require("../controller/users");
 const { getResults } = require("../controller/data");
-const { addItem, removeItem, createUser, deleteUser } = require("../controller/admin");
+const { addItem, removeItem, createUser, deleteUser, findUser } = require("../controller/admin");
 const { checkAdminStatus, checkUserStatus, authenticateToken } = require("./auth");
 const multer = require("multer");
 const upload = multer();
@@ -104,6 +104,16 @@ router.put("/admin/create-user", upload.none(), (req, res) => createUser(req, re
         email: email address
 */
 router.delete("/admin/delete-user", upload.none(), (req, res) => deleteUser(req, res));
+
+/*  
+    @ POST /api/admin/find-user
+    @ content-type = application/json
+    @ Finds a user
+
+    @ parameters
+        email: email address
+*/
+router.post("/admin/find-user", upload.none(), (req, res) => findUser(req, res));
 
 
 module.exports = router;

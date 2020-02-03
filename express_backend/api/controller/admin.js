@@ -9,9 +9,7 @@ const {
     createNewUser,
     deleteUserByEmail
 } = require("../model/functions");
-const {
-    hashPassword
-} = require("./users");
+const { hashPassword } = require("./users");
 
 // Configure client for use with Spaces
 const spacesEndpoint = new AWS.Endpoint("sgp1.digitaloceanspaces.com");
@@ -110,7 +108,7 @@ async function createUser(req, res) {
     // If a match exists, return a conflict status
     if (itemCount !== 0) return res.sendStatus(409);
     // Add user to the db
-    if(email && password) {
+    if (email && password) {
         createNewUser(email, await hashPassword(password));
         return res.sendStatus(201);
     }
@@ -141,9 +139,36 @@ function deleteUser(req, res) {
     return res.sendStatus(400);
 }
 
+// Finds a user
+async function findUser(req, res) {
+    // Sets email equal to the request content email
+    const email = req.body.email;
+    // Finds if a matching item exists
+    const itemCount = await checkUserExistenceByQuery({ email });
+    // If a match doesn't exists, return a not found status
+    if (itemCount === 0) return res.sendStatus(404);
+    // Finds if the request has an email parameter
+    if (email) {
+        try {
+            // Finds user from db
+            const user = await findUserByEmail(email);
+
+            // Returns OK status
+            return res.status(200).send(user);
+        } catch (err) {
+            // Invalid operations
+            console.log("Operation invalid");
+        }
+    }
+
+    // If request parameters invalid
+    return res.sendStatus(400);
+}
+
 module.exports = {
     addItem,
     removeItem,
     createUser,
-    deleteUser
+    deleteUser,
+    findUser
 };

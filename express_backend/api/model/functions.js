@@ -9,7 +9,7 @@ function findUserByID(_id) {
 
 // Finds user by email
 function findUserByEmail(email) {
-    return User.findOne({ email });
+    return User.findOne({ email }).limit(1);
 }
 
 // Creates new user with email and password hash
