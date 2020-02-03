@@ -13,7 +13,8 @@ app.use(
 app.use(cors());
 
 // Make a connection to MongoDB server
-require("./model/database");
+const db = require("./model/database");
+db.connect();
 
 // Pass route handling to router
 const router = require("./controller/router");
