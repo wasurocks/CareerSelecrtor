@@ -24,7 +24,7 @@ The following routes are publicly available
 	 - **password**: password
 	 - **password2**: confirm-password
 
-### Authenticated Routes
+## Authenticated Routes
 
 The following routes are restricted to existing users
 
