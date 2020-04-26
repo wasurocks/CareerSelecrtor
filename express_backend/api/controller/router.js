@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { login, register } = require("../controller/users");
 const { getResults } = require("../controller/data");
-const { addItem, removeItem, validateAdmin } = require("../controller/admin");
+const { addItem, removeItem, createUser, deleteUser, findUser } = require("../controller/admin");
 const { checkAdminStatus, checkUserStatus, authenticateToken } = require("./auth");
 const multer = require("multer");
 const upload = multer();
@@ -34,7 +34,7 @@ router.post("/register", (req, res) => register(req, res));
 router.use([authenticateToken, checkUserStatus]);
 
 /*  
-    @ POST /api/admin/current-results
+    @ POST /api/data/current-results
     @ content-type = application/json
     @ Searches for items from specified parameters
 
@@ -93,12 +93,27 @@ router.delete("/admin/delete", upload.none(), (req, res) => removeItem(req, res)
         email: email address
         password: password
 */
-/*router.post("/admin/create-user", (req, res) => {
-    // MODIFY BELOW 
-    if (req.body.name && req.file) {
-        addItem(req.body.name, req.file.buffer);
-        res.sendStatus(201);
-    } else res.sendStatus(400);
-});*/
+router.put("/admin/create-user", upload.none(), (req, res) => createUser(req, res));
+
+/*  
+    @ POST /api/admin/delete-user
+    @ content-type = application/json
+    @ Removes a user
+
+    @ parameters
+        email: email address
+*/
+router.delete("/admin/delete-user", upload.none(), (req, res) => deleteUser(req, res));
+
+/*  
+    @ POST /api/admin/find-user
+    @ content-type = application/json
+    @ Finds a user
+
+    @ parameters
+        email: email address
+*/
+router.post("/admin/find-user", upload.none(), (req, res) => findUser(req, res));
+
 
 module.exports = router;

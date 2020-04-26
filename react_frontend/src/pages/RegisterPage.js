@@ -4,19 +4,8 @@ import RegisterForm from "../components/RegisterForm.js";
 import Logo from "../components/Logo.js";
 
 // UI imports
-import { ThemeProvider, TextField } from "@material-ui/core";
-import { createMuiTheme } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
-
-const theme = createMuiTheme({
-    shadows: ["none"],
-    palette: {
-        primary: {
-            main: "#909090"
-        }
-    }
-});
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function RegisterPage() {
     const context = React.useContext(AuthContext);

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import "../styles/FooterTab.css";
-import { QuestionContext } from "../QuestionContext";
+import { QuestionContext } from "../contexts/QuestionContext";
 
 export default props => {
     const context = useContext(QuestionContext);

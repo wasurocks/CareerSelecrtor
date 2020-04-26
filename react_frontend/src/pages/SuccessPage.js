@@ -6,7 +6,7 @@ import Logo from "../components/Logo.js";
 import { ThemeProvider, Link, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const theme = createMuiTheme({
     shadows: ["none"],

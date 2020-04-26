@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext } from "react";
 import Radio from "../components/Radio";
 import "../styles/RadioGroup.css";
-import { QuestionContext } from "../QuestionContext";
+import { QuestionContext } from "../contexts/QuestionContext";
 
 export default props => {
     const context = useContext(QuestionContext);
@@ -22,7 +22,7 @@ export default props => {
         // Set dictionary truth values
         let temp = { ...values }; // Need to copy dictionary first or setValues won't trigger re-render
         for (const [key] of Object.entries(temp))
-            temp[key] = key == event.target.id; // Sets the matching key to true
+            temp[key] = key === event.target.id; // Sets the matching key to true
         setValues(temp);
         // Set parameter specified through prop to current selection
         context.setParam(props.type, event.target.id);
@@ -30,17 +30,14 @@ export default props => {
 
     // Returns an array of radio elements for render
     const createChoices = info => {
-        let choices = [];
-        info.map(element => {
-            choices.push(
-                <Radio
-                    value={element}
-                    key={element}
-                    onClick={handleClick}
-                    isChecked={values[element]}
-                />
-            );
-        });
+        const choices = info.map(element => 
+            <Radio
+                value={element}
+                key={element}
+                onClick={handleClick}
+                isChecked={values[element]}
+            />
+        );
         return choices;
     };
 

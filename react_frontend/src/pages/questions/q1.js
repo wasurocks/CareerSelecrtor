@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "../../styles/Q1.css";
 import PicBox from "../../components/PicBox.js";
-import { QuestionContext } from "../../QuestionContext";
+import { QuestionContext } from "../../contexts/QuestionContext";
 
 export default function Q1() {
     const context = useContext(QuestionContext);
